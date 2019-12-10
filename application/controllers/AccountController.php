@@ -10,7 +10,11 @@ class AccountController extends Controller
     public function loginAction()
     {
         // $this->view->path = 'test/login';
-        $this->view->redirect('/');
+        // $this->view->redirect('/');
+        if (!empty($_POST)) {
+           $this->view->message('$status', '$message');
+           //$this->view->location('/');
+        }
         $this->view->render('страница входа');
     }
 

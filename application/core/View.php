@@ -42,11 +42,21 @@ class View
         $path = 'application/views/errors/' . $code . '.php';
         if (file_exists($path)) {
             require $path;
-        }else {
+        } else {
             echo 'файл не найден ' . $this->path;
         }
         exit;
 
+    }
+
+    public function message($status, $message)
+    {
+        exit(json_encode(['status' => $status, 'message' => $message]));
+    }
+
+    public function location($url)
+    {
+        exit(json_encode(['url' => $url]));
     }
 
 }
