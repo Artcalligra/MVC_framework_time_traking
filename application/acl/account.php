@@ -3,11 +3,10 @@
 return [
     'all' => [
         'login',
+        'register',
+        'index',
     ],
     'authorize' => [
-        'register',
-    ],
-    'guest' => [
 
     ],
     'admin' => [
