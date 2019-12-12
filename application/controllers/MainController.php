@@ -9,25 +9,34 @@ class MainController extends Controller
 {
     public function indexAction()
     {
-        /* $vars = [
-        'name' => 'Вася',
-        'age' => 11,
-        ]; */
-        $db = new Db;
 
-        //$form = 2;
-        $params = [
-            'id' => 2,
-        ];
+        /* if(isset($_SESSION)){
 
-        $date = $db->column('SELECT name FROM users WHERE id = :id' , $params);
-        //debug($date);
-        $result = $this->model->getNews();
-        $vars=[
-            'news'=>$result,
-        ];
-        //debug($result);
-        $this->view->render('главная страница' , $vars);
+        } */
+        if (isset($_SESSION['user_id'])) {
+            /* $vars = [
+            'name' => 'Вася',
+            'age' => 11,
+            ]; */
+            $db = new Db;
+
+            //$form = 2;
+            $params = [
+                'id' => 2,
+            ];
+
+            $date = $db->column('SELECT name FROM users WHERE id = :id', $params);
+            //debug($date);
+            $result = $this->model->getNews();
+            $vars = [
+                'news' => $result,
+            ];
+            //debug($result);
+            $this->view->render('главная страница', $vars);
+        } else {
+            $this->view->redirect('/account/login');
+        }
+
     }
 
     /* public function contactAction()

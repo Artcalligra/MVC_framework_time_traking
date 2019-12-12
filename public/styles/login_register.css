@@ -1,0 +1,63 @@
+/* body */
+
+body {
+    background: #bde5f1;
+}
+
+/* регистрация и авторизация */
+
+.block-center {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.block-form {
+    background: #fff;
+    max-width: 400px;
+    flex-basis: auto;
+    flex-grow: 1;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0.4em 0.4em 5px rgba(122, 122, 122, 0.5);
+    font: 1.2em Geometria-Medium;
+    /* box-shadow:0 0 10px rgba(0,0,0,0.5); */
+}
+
+.block-form h2 {
+    text-align: center;
+}
+
+.block-form input {
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 3px #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+
+}
+
+.block-form button {
+    margin: 10px 0;
+    font-size: 1.4em;
+}
+
+.block-form span {
+    font-size: 0.8em;
+}
+
+.item-size {
+    width: 100%;
+    padding: 12px 15px;
+}
+
+.block-form__sign {
+    text-align: center;
+    margin-top: 5px;
+}
