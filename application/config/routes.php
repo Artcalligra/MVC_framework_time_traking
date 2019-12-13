@@ -21,6 +21,11 @@ return [
         'action' => 'register',
     ],
 
+    'api' => [
+        'controller' => 'api',
+        'action' => 'settime',
+    ],
+
 /*     'news/show' => [
         'controller' => 'news',
         'action' => 'show',

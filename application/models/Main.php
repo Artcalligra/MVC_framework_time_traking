@@ -10,4 +10,10 @@ class Main extends Model
         $result = $this->db->row('SELECT title,description FROM news');
         return $result;
     }
+
+    public function getUserId($user_id)
+    {
+        $result = $this->db->row('SELECT * FROM users WHERE id="' . $user_id . '"');
+        return $result;
+    }
 }

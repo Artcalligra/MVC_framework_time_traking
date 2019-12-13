@@ -7,11 +7,12 @@ use application\lib\Db;
 
 class Account extends Model
 {
-    public function getUserId($user_name, $password)
+    public function getUser($user_name, $password)
     {
-        $result = $this->db->column('SELECT id FROM users WHERE user_name="' . $user_name . '" AND password="' . $password . '"');
+        $result = $this->db->row('SELECT * FROM users WHERE user_name="' . $user_name . '" AND password="' . $password . '"');
         return $result;
     }
+
 
     public function checkUser($user_name)
     {

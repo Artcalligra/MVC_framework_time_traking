@@ -1,5 +1,37 @@
 /* header */
+.header-items__logo {
+    width: 100%;
+}
 
-.header-logo img {
+.header-items__logo img {
     max-width: 150px;
+}
+
+.header-items {
+    display: inline-flex;
+    width: 100%;
+}
+
+.header-item:not(:first-child) {
+    width: 33%;
+    text-align: end;
+}
+
+.header-items__time-popup,
+.header-items__user-popup {
+    position: absolute;
+    display: none;
+    /* margin-top: 100px; */
+}
+
+.header-items__time-popup {
+    /* right: 0;
+    margin-right: 27%;
+    margin-top: 5%; */
+
+}
+
+
+.active {
+    display: block;
 }

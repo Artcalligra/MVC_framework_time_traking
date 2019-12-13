@@ -17,10 +17,10 @@ class AccountController extends Controller
         if (!empty($_POST)) {
             $user_name = $_POST['user_name'];
             $password = md5($_POST['password']);
-            $result = $this->model->getUserId($user_name, $password);
-            //debug($result);
+            $result = $this->model->getUser($user_name, $password);
+           // debug($result[0]['id']);
             if ($result) {
-                $_SESSION['user_id'] = $result;
+                $_SESSION['user_id'] = $result[0]['id'];
                 $this->view->redirect('/');
             } else {
 

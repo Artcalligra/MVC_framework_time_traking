@@ -24,12 +24,14 @@ class MainController extends Controller
             $params = [
                 'id' => 2,
             ];
-
-            $date = $db->column('SELECT name FROM users WHERE id = :id', $params);
+            $result_user = $this->model->getUserId($_SESSION['user_id']);
+            //debug($result_user[0]);
+            //$date = $db->column('SELECT name FROM users WHERE id = :id', $params);
             //debug($date);
             $result = $this->model->getNews();
             $vars = [
                 'news' => $result,
+                'user' => $result_user[0],
             ];
             //debug($result);
             $this->view->render('главная страница', $vars);
