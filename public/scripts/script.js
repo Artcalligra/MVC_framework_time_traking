@@ -46,13 +46,28 @@ function time() {
 function get_time() {
    // time();
     now_time = setInterval(time, 1000);
-    console.log('start ' + get_now_time());
+    start_time = get_now_time();
+    console.log('start ' + start_time);
+    $("#button_pause").addClass("active");
+    $("#button_stop").addClass("active");
+    $("#button_start").addClass("disable");
+
+    $.ajax({
+        type: "POST",
+        url: "api/addtime",
+        data: 'start_time= ' + start_time,
+        success: function(msg){
+          alert( "Прибыли данные: " + msg );
+        }
+      });
 }
 
 
 function pause_time() {
     clearInterval(now_time);
     console.log('pause ' + get_now_time());
+    $("#button_pause").removeClass("active");
+    $("#button_start").removeClass("disable");
 }
 
 function stop_time() {
@@ -61,6 +76,9 @@ function stop_time() {
     time();
     clearInterval(now_time);
     console.log('stop ' + get_now_time());
+    $("#button_pause").removeClass("active");
+    $("#button_stop").removeClass("active");
+    $("#button_start").removeClass("disable");
 }
 
 jQuery(function ($) {
@@ -80,79 +98,5 @@ jQuery(function ($) {
             $("#itemPopupSettings").addClass("active");
         }
     });
-
-    /*  $(document).click(function (e) {
-         if ( ($(e.target.className == 'header-item header-items__time'))) {
-             console.log(e.target.className);
-             $("#itemPopupTime").addClass("active");
-
-         }  else if ($("#itemPopupTime").hasClass("active")) {
-             $("#itemPopupTime").removeClass('active');
-             console.log('disable');
-         }
-
-     }); */
-
-    /* $('#openPopupSettings').click(function (e) {
-        clickItem($("#itemPopupSettings"), e);
-    });
-
-    function clickItem(div, e) {
-        if (div.is(":hidden")) {
-            div.show();
-        }
-    } */
-
-
-    /*  $(document).click(function (e) {
-
-                        if ($("#itemPopupTime").hasClass("active")) {
-                            $("#itemPopupTime").removeClass("active")
-                            $("#itemPopupTime").addClass("disable");
-                        }
-                    });
-     */
-
-
-
-
-    /*  $(document).click(function (e) {
-         if ($("#itemPopupTime").hasClass("active")) {
-             if ($(e.target).closest('#itemPopupTime').length) {
-                 return;
-             }
-             $("#itemPopupTime").removeClass("active")
-             $("#itemPopupTime").addClass("disable");
-         }
-
-     }); */
-
-    /*  jQuery(document).on('click',function (e) {
-         var el = '#itemPopupTime';
-         if (jQuery(e.target).closest(el).length) return;
-         el.removeClass("active");
-         el.addClass("disable");
-        }); */
-
-
-
-
-    /* $(document).mouseup(function (e) {
-        var div = $("#itemPopupTime");
-        if (div.is(":visible")) {
-            clickPage(div, e);
-        } else {
-            div = $("#itemPopupSettings");
-            clickPage(div, e);
-        }
-    });
-
-
-    function clickPage(div, e) {
-        if (!div.is(e.target) &&
-            div.has(e.target).length === 0) {
-            div.hide();
-        }
-    } */
 
 });

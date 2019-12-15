@@ -24,11 +24,8 @@
     /* margin-top: 100px; */
 }
 
-.header-items__time-popup {
-    /* right: 0;
-    margin-right: 27%;
-    margin-top: 5%; */
-
+.disable{
+    display: none;
 }
 
 

@@ -21,7 +21,7 @@ return [
         'action' => 'register',
     ],
 
-    'api' => [
+    'api/addtime' => [
         'controller' => 'api',
         'action' => 'settime',
     ],
