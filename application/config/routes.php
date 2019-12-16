@@ -21,10 +21,11 @@ return [
         'action' => 'register',
     ],
 
-    'api/addtime' => [
+    'api/time' => [
         'controller' => 'api',
-        'action' => 'settime',
+        'action' => 'time',
     ],
+
 
 /*     'news/show' => [
         'controller' => 'news',

@@ -2,13 +2,13 @@
 
 return [
     'all' => [
+
+    ],
+    'authorize' => [
         'login',
         'register',
         'index',
-        'settime',
-    ],
-    'authorize' => [
-
+        'time',
     ],
     'admin' => [
 

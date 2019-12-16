@@ -34,7 +34,7 @@ abstract class Controller
         $this->acl = require 'application/acl/' . $this->route['controller'] . '.php';
         if ($this->isAcl('all')) {
             return true;
-        } elseif (isset($_SESSION['authorize']['id']) and $this->isAcl('authorize')) {
+        } elseif (isset($_SESSION['user_id']) and $this->isAcl('authorize')) {
             return true;
         } elseif (isset($_SESSION['admin']) and $this->isAcl('admin')) {
             return true;

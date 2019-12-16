@@ -1,5 +1,5 @@
 <p>Главная страница</p>
-<!-- <p>Id : <b><?php echo $id; ?></b></p>
+<!-- <p>Id : <b><?php echo $current_time; ?></b></p>
 <p>Возраст : <b><?php echo $user_name; ?></b></p> -->
 
 
