@@ -22,20 +22,19 @@ class MainController extends Controller
 
             $current_time = date("H:i:s", time());
             $date = date("d:m:Y", time());
-            $status = "не работаю";
+            $status = "dont work";
             
             $check_user = $this->model->checkUser($_SESSION['user_id'],$date);
             if (!empty($check_user)){
-                $status = $check_user[0]['status'];
+                $userTime = $check_user;
             }
 
             $result = $this->model->getNews();
-            
             $vars = [
                 'news' => $result,
                 'user' => $result_user[0],
                 'current_time' => $current_time,
-                'status'=>$status,
+                'userTime'=>$userTime,
             ];
             $this->view->render('главная страница', $vars);
         } else {

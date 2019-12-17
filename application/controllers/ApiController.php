@@ -19,29 +19,36 @@ class ApiController extends Controller
 
             switch ($_POST['status']) {
                 case "работаю":
-                   // echo ('i равно 0');
-                    $check_user = $this->model->checkUser($_SESSION['user_id'],$date);
-                    //debug($check_user);
+                    $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
                     if (empty($check_user)) {
-                        //debug($check_user);
                         $add_user = $this->model->addUser($_SESSION['user_id'], $date, $current_time);
-                       
                     } else {
-                        $status_work = $this->model->statusWork($_SESSION['user_id'], $date, $current_time);
+                        $status_worker = $this->model->statusWorker($_SESSION['user_id'], $date, $current_time);
                     }
+
                     break;
                 case "перерыв":
-                    echo "i равно 1";
-                    break;                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-                case 'конец рабочего дня':
-                    echo "i равно 2";
+                    $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
+                    $total_work = $current_time - $check_user[0]['buffer_start'];
+                    $add_pause = $this->model->addPause($_SESSION['user_id'], $date, $current_time, $total_work);
+                   
+                break;
+                case "закончить перерыв":
+                    $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
+                    $total_pause = $current_time - $check_user[0]['buffer_pause'];
+                    //debug($total_pause);
+                    $continue_work = $this->model->continueWork($_SESSION['user_id'], $date, $current_time, $total_pause);
+                   //debug($continue_work);
+                break;
+                case 'день закончен':
+                    $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
+                    $total_work = $current_time - $check_user[0]['buffer_start'];
+                    $end_day = $this->model->endDay($_SESSION['user_id'], $date, $current_time, $total_work);
                     break;
             }
-
-           // debug($_POST);
-            //$result = $this->model->addDateAndStart($user_id, $current_date, $start_time);
-            /*  $status = $this->model->getStatus($user_id);
-        debug($status); */
+            
+            $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
+            $this->view->message($check_user[0]);
         } else {
             echo ('error');
         }

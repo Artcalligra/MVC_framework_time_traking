@@ -2,12 +2,11 @@
 
 return [
     'all' => [
-
-    ],
-    'authorize' => [
         'login',
         'register',
         'index',
+    ],
+    'authorize' => [
         'time',
     ],
     'admin' => [

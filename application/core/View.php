@@ -49,9 +49,9 @@ class View
 
     }
 
-    public function message($status, $message)
+    public function message($arr)
     {
-        exit(json_encode(['status' => $status, 'message' => $message]));
+       exit(json_encode($arr));
     }
 
     public function location($url)

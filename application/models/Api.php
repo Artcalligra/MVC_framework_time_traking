@@ -7,30 +7,6 @@ use application\lib\Db;
 
 class Api extends Model
 {
-    /* public function addDateAndStart($user_id, $date, $start)
-    {
-    $db = new Db;
-    $params = [
-    'user_id' =>$user_id,
-    'date' => $date,
-    'start' => $start,
-    ];
-
-    $date = $db->query('INSERT INTO times SET user_id =: user_id, date = :date, start = :start ', $params);
-    return $date;
-    } */
-
-    /* public function addUserInTime($user_id)
-    {
-    $db = new Db;
-    $params = [
-    'user_id' =>$user_id,
-    ];
-
-    $date = $db->query('INSERT INTO times SET user_id =: user_id ', $params);
-    return $date;
-    } */
-
     public function checkUser($user_id, $date)
     {
 
@@ -52,28 +28,74 @@ class Api extends Model
             'date' => $date,
             'start' => $start,
             'buffer_start' => $start,
-            'status' => "работаю",
+            'status' => "work",
         ];
-
-        //debug($params);
 
         $date = $db->query('INSERT INTO times SET user_id = :user_id, date = :date, start = :start, buffer_start = :buffer_start, status = :status', $params);
         return $date;
 
     }
 
-    public function statusWork($user_id, $date, $start)
+    public function statusWorker($user_id, $date, $start)
     {
 
         $db = new Db;
         $params = [
-            'status' => "работаю",
+            'status' => "work",
             'user_id' => $user_id,
-            'date' => $date, 
-            'buffer_start' => $start,           
+            'date' => $date,
+            'buffer_start' => $start,
         ];
 
         $date = $this->db->row('UPDATE times SET status = :status, buffer_start = :buffer_start WHERE user_id = :user_id AND date = :date', $params);
         return $date;
     }
+
+    public function addPause($user_id, $date, $current_time, $total_work)
+    {
+
+        $db = new Db;
+        $params = [
+            'status' => "pause",
+            'user_id' => $user_id,
+            'date' => $date,
+            'buffer_pause' => $current_time,
+            'total_worked' => $total_work,
+        ];
+
+        $date = $this->db->row('UPDATE times SET status = :status, total_worked = total_worked + :total_worked, buffer_pause = :buffer_pause  WHERE user_id = :user_id AND date = :date', $params);
+        return $date; 
+    }
+
+    public function continueWork($user_id, $date, $current_time, $total_pause)
+    {
+
+        $db = new Db;
+        $params = [
+            'status' => "work",
+            'user_id' => $user_id,
+            'date' => $date,
+            'buffer_start' => $current_time,
+            'total_pause' => $total_pause,
+        ];
+
+        $date = $this->db->row('UPDATE times SET status = :status, total_pause = total_pause + :total_pause, buffer_start = :buffer_start  WHERE user_id = :user_id AND date = :date', $params);
+        return $date; 
+    }
+
+    public function endDay($user_id, $date, $current_time, $total_work)
+    {
+
+        $db = new Db;
+        $params = [
+            'status' => "end day",
+            'user_id' => $user_id,
+            'date' => $date,
+            'total_worked' => $total_work,
+        ];
+
+        $date = $this->db->row('UPDATE times SET status = :status, total_worked = total_worked + :total_worked WHERE user_id = :user_id AND date = :date', $params);
+        return $date; 
+    }
+
 }
