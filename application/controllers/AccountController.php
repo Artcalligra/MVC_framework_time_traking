@@ -21,6 +21,7 @@ class AccountController extends Controller
            // debug($result[0]['id']);
             if ($result) {
                 $_SESSION['user_id'] = $result[0]['id'];
+                $_SESSION['rang'] = $result[0]['rang'];
                 $this->view->redirect('/');
             } else {
 

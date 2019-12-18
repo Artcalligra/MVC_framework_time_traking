@@ -5,6 +5,11 @@ return [
         'controller' => 'main',
         'action' => 'index',
     ],
+
+    /* 'api' => [
+        'controller' => 'main',
+        'action' => 'api',
+    ], */
 /* 
     'contact' => [
         'controller' => 'main',

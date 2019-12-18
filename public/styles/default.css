@@ -10,6 +10,7 @@
 .header-items {
     display: inline-flex;
     width: 100%;
+    padding: 10px 0;
 }
 
 .header-item:not(:first-child) {
@@ -24,13 +25,26 @@
     /* margin-top: 100px; */
 }
 
-.header-items__time-popup {
-    margin-left: -65px;
+.header-items__user-popup {
+    margin-left: 58px;
 }
 
-.header-items__user-popup {
-    margin-left: 80px;
+.header-items__show{
+    display: flex;
 }
+
+.header-items__show div{
+    padding: 10px;
+    white-space: nowrap;
+}
+
+.header-items__time-popup__pause-time {
+    display: none;
+}
+/* .header-items__time-popup__work-time, .header-items__time-popup__pause-time{
+    display: flex;
+    padding: 10px 5px;
+} */
 
 .disable {
     display: none;

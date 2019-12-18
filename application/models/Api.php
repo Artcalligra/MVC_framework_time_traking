@@ -28,7 +28,7 @@ class Api extends Model
             'date' => $date,
             'start' => $start,
             'buffer_start' => $start,
-            'status' => "work",
+            'status' => "работаю",
         ];
 
         $date = $db->query('INSERT INTO times SET user_id = :user_id, date = :date, start = :start, buffer_start = :buffer_start, status = :status', $params);
@@ -41,7 +41,7 @@ class Api extends Model
 
         $db = new Db;
         $params = [
-            'status' => "work",
+            'status' => "работаю",
             'user_id' => $user_id,
             'date' => $date,
             'buffer_start' => $start,
@@ -56,7 +56,7 @@ class Api extends Model
 
         $db = new Db;
         $params = [
-            'status' => "pause",
+            'status' => "перерыв",
             'user_id' => $user_id,
             'date' => $date,
             'buffer_pause' => $current_time,
@@ -72,7 +72,7 @@ class Api extends Model
 
         $db = new Db;
         $params = [
-            'status' => "work",
+            'status' => "работаю",
             'user_id' => $user_id,
             'date' => $date,
             'buffer_start' => $current_time,
@@ -88,7 +88,7 @@ class Api extends Model
 
         $db = new Db;
         $params = [
-            'status' => "end day",
+            'status' => "день завершён",
             'user_id' => $user_id,
             'date' => $date,
             'total_worked' => $total_work,

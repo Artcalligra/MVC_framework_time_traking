@@ -36,7 +36,7 @@ abstract class Controller
             return true;
         } elseif (isset($_SESSION['user_id']) and $this->isAcl('authorize')) {
             return true;
-        } elseif (isset($_SESSION['admin']) and $this->isAcl('admin')) {
+        } elseif (isset($_SESSION['rang']) and $this->isAcl('admin')) {
             return true;
         }
         return false;

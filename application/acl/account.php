@@ -6,10 +6,13 @@ return [
         'register',
     ],
     'authorize' => [
-        'index',
-        'time',
+/*         'index',
+        'time', */
     ],
     'admin' => [
-
+        /* 'login',
+        'register',
+        'index',
+        'time', */
     ],
 ];
