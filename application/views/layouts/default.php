@@ -23,7 +23,7 @@
                     <div class = "header-items__time-popup" id = "itemPopupTime">
                         <div class = "header-items__time-popup__work-time">
                             <span>Длительность рабочего дня: </span>
-                             <div id="timer_work"><?php echo $date = date("H:i:s", $work_time); ?></div>
+                             <div id="timer_work"><?php date_default_timezone_set("UTC"); echo $date = date("H:i:s", $work_time); ?></div>
                         </div>
                         <div class = "header-items__time-popup__pause-time <?php 
                         switch ($status) {
@@ -100,14 +100,32 @@
                 </div>
                 <div class = "header-item header-items__user" id = "openPopupSettings">
                     <div class = "header-items__user-name"><p><?php echo ($user['user_name']); ?></p></div>
-                    <div class = "header-items__user-popup" id = "itemPopupSettings">моя страница<br>выйти</div>
+                    <div class = "header-items__user-popup" id = "itemPopupSettings"><a href = "/profile/user">Моя страница</a><br><a href = "/account/login">Выход</a> </div>
                 </div>
             </div>
         </div>
     </header>
     <main>
         <div class = "container">
-            <?php echo $content; ?>
+            <div class = "main-content">
+                <div class = "main-content__navigation">
+                    <a href = "/">Новости</a>
+                    <a href = "/time_tracking">Учёт рабочего времени</a>
+                    <a href = "/statistic" class = "disable <?php 
+                        switch ($user['rang']) {
+                            case "admin":
+                                echo 'active';
+                                break;
+                            case "user":   
+                                break;
+                            }
+                            ?>">Статистика</a>
+                   <!--  <a href = "#">Сервисы</a> -->
+                </div>
+                <div class = "main-content__content">
+                    <?php echo $content; ?>
+                </div> 
+            </div>  
         </div>
     </main>
     <footer>

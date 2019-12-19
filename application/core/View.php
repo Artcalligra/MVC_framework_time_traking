@@ -15,6 +15,12 @@ class View
         // debug($this->path);
     }
 
+    public function render_content($path)
+    {
+        $this->path = $path;
+        //debug($this->path );
+    }
+
     public function render($title, $vars = [])
     {
         extract($vars);

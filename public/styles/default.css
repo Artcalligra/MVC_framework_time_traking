@@ -54,3 +54,21 @@
 .active {
     display: block;
 }
+
+/* main */
+
+.main-content{
+    display: flex;
+    width: 100%;
+}
+
+.main-content__navigation{
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.main-content__content{
+    width: 80%;
+}

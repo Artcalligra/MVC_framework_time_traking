@@ -8,7 +8,7 @@ use application\lib\Db;
 class Main extends Model
 {
     public function getNews(){
-        $result = $this->db->row('SELECT title,description FROM news');
+        $result = $this->db->row('SELECT title,description FROM news ORDER BY id DESC');
         return $result;
     }
 

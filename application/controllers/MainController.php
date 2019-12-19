@@ -3,30 +3,32 @@
 namespace application\controllers;
 
 use application\core\Controller;
+use application\core\View;
 
 class MainController extends Controller
 {
-    public function indexAction()
+
+    public $default_value;
+
+    public function __construct($route)
     {
 
-        if (isset($_SESSION['user_id'])) {
+        $this->route = $route;
+        if (!$this->checkAcl()) {
+            View::errorCode(403);
+        }
 
+        $this->view = new View($route);
+        $this->model = $this->loadModel($route['controller']);
+
+        if (isset($_SESSION['user_id'])) {
             $userTime = null;
             $result_user = $this->model->getUserId($_SESSION['user_id']);
-
-            // debug($check_user);
-            /* $add_user = $this->model->addUserInTime($_SESSION['user_id']);
-            $status = $this->model->getStatus($_SESSION['user_id']); */
-            //debug($status);
-            //$date = $db->column('SELECT name FROM users WHERE id = :id', $params);
-            //debug($date)
-
-            // $current_time = date("H:i:s", time());
             $current_time = date("H:i:s", time());
             $date = date("d:m:Y", time());
             $status = "не работаю";
-            $work_time = "00:00:00";
-            $pause_time = "00:00:00";
+            $work_time = 0;
+            $pause_time = 0;
 
             $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
             if (!empty($check_user)) {
@@ -35,76 +37,151 @@ class MainController extends Controller
                 $pause_time = $check_user[0]['total_pause'];
             }
 
-            $result = $this->model->getNews();
-            $vars = [
-                'news' => $result,
+            $this->default_value = [
                 'user' => $result_user[0],
                 'current_time' => $current_time,
                 'status' => $status,
                 'work_time' => $work_time,
                 'pause_time' => $pause_time,
             ];
-            $this->view->render('главная страница', $vars);
         } else {
             $this->view->redirect('/account/login');
         }
 
     }
 
-/*     public function apiAction(){
+    public function indexAction()
+    {
 
-        $this->view->layout = 'default';
+        /* if (isset($_SESSION['rang'])) {
+        if ($_SESSION['rang'] == 'admin') {
+        $this->view->render_content('main/time_tracking');
+        }
+        } */
 
-        $current_time = time();
+        /*if (isset($_SESSION['user_id'])) {
+
+        $userTime = null;
+        $result_user = $this->model->getUserId($_SESSION['user_id']); */
+
+        // debug($check_user);
+        /* $add_user = $this->model->addUserInTime($_SESSION['user_id']);
+        $status = $this->model->getStatus($_SESSION['user_id']); */
+        //debug($status);
+        //$date = $db->column('SELECT name FROM users WHERE id = :id', $params);
+        //debug($date)
+
+        // $current_time = date("H:i:s", time());
+        /*  $current_time = date("H:i:s", time());
         $date = date("d:m:Y", time());
+        $status = "не работаю";
+        $work_time = 0;
+        $pause_time = 0;
 
-        if (isset($_SESSION['user_id'])) {
-            $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
-            debug($check_user);
-            if (empty($check_user)) {
-               // debug('none');
-                $add_user = $this->model->addUser($_SESSION['user_id'], $date, $current_time);
-            } else {
-               // debug('have');
-                if (isset($_POST['status'])) {
+        $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
+        if (!empty($check_user)) {
+        $status = $check_user[0]['status'];
+        $work_time = $check_user[0]['total_worked'];
+        $pause_time = $check_user[0]['total_pause'];
+        } */
 
-                    switch ($_POST['status']) {
-                        case "работаю":
-                            /* $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
-                            if (empty($check_user)) {
-                            $add_user = $this->model->addUser($_SESSION['user_id'], $date, $current_time);
-                            }  else {
-                            $status_worker = $this->model->statusWorker($_SESSION['user_id'], $date, $current_time);
-                            // }
+        $result = $this->model->getNews();
+        $default_value = $this->default_value;
+        $vars = $default_value += [
+            'news' => $result,
+            /*  'user' => $result_user[0],
+        'current_time' => $current_time,
+        'status' => $status,
+        'work_time' => $work_time,
+        'pause_time' => $pause_time, */
+        ];
+        $this->view->render('главная страница', $vars);
 
-                            break;
-                        case "перерыв":
-                            $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
-                            $total_work = $current_time - $check_user[0]['buffer_start'];
-                            $add_pause = $this->model->addPause($_SESSION['user_id'], $date, $current_time, $total_work);
+        /*  } else {
+    $this->view->redirect('/account/login');
+    } */
 
-                            break;
-                        case "закончить перерыв":
-                            $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
-                            $total_pause = $current_time - $check_user[0]['buffer_pause'];
-                            //debug($total_pause);
-                            $continue_work = $this->model->continueWork($_SESSION['user_id'], $date, $current_time, $total_pause);
-                            //debug($continue_work);
-                            break;
-                        case 'день закончен':
-                            $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
-                            $total_work = $current_time - $check_user[0]['buffer_start'];
-                            $end_day = $this->model->endDay($_SESSION['user_id'], $date, $current_time, $total_work);
-                            break;
-                    }
+    }
 
-                    $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
-                    $this->view->message($check_user[0]);
-                }
-            }
+    /* public function default_date()
+    {
+    $userTime = null;
+    $result_user = $this->model->getUserId($_SESSION['user_id']);
+    $current_time = date("H:i:s", time());
+    $date = date("d:m:Y", time());
+    $status = "не работаю";
+    $work_time = 0;
+    $pause_time = 0;
+
+    $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
+    if (!empty($check_user)) {
+    $status = $check_user[0]['status'];
+    $work_time = $check_user[0]['total_worked'];
+    $pause_time = $check_user[0]['total_pause'];
+    }
+
+    $default_value = [
+    'user' => $result_user[0],
+    'current_time' => $current_time,
+    'status' => $status,
+    'work_time' => $work_time,
+    'pause_time' => $pause_time,
+    ];
+
+    return $default_value;
+    } */
+
+    public function time_trackingAction()
+    {
+
+        /*if (isset($_SESSION['user_id'])) {
+
+        $userTime = null;
+        $result_user = $this->model->getUserId($_SESSION['user_id']);
+        $current_time = date("H:i:s", time());
+        $date = date("d:m:Y", time());
+        $status = "не работаю";
+        $work_time = 0;
+        $pause_time = 0;
+
+        $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
+        if (!empty($check_user)) {
+        $status = $check_user[0]['status'];
+        $work_time = $check_user[0]['total_worked'];
+        $pause_time = $check_user[0]['total_pause'];
         }
 
+        $result = $this->model->getNews();
+        $vars = [
+        'user' => $result_user[0],
+        'current_time' => $current_time,
+        'status' => $status,
+        'work_time' => $work_time,
+        'pause_time' => $pause_time,
+        ]; */
+        /* $varss  = default_date();
+        debug($varss); */
+        $default_value = $this->default_value;
+        /* $default_value = default_date();
+        debug($default_value); */
+        $this->view->render('страница учёта времени', $default_value);
 
+        /*  } else {
+    $this->view->redirect('/account/login');
     } */
+    }
+
+    public function statisticAction()
+    {
+            $default_value = $this->default_value;
+            $this->view->render('страница статистики', $default_value);
+    }
+    
+
+    public function profileAction()
+    {
+            $default_value = $this->default_value;
+            $this->view->render('страница профиля', $default_value);
+    }
 
 }

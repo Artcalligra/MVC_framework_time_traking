@@ -3,12 +3,14 @@
 return [
     'all' => [
         'index',
+        'time_tracking',
+        'statistic',
+        'profile',
     ],
     'authorize' => [
-        'index',
+        
     ],
     'admin' => [
-        'index',
 
     ],
 ];

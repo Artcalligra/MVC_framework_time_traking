@@ -177,6 +177,8 @@ window.onload = function () {
             clearInterval(break_time);
             break;
     }
+
+    //sendStatus(onloadStatus);
 }
 
 
