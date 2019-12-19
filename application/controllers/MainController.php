@@ -29,20 +29,26 @@ class MainController extends Controller
             $status = "не работаю";
             $work_time = 0;
             $pause_time = 0;
+            $user_img = "public/images/default_user.jpg";
+            $rang = "user";
 
             $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
             if (!empty($check_user)) {
                 $status = $check_user[0]['status'];
                 $work_time = $check_user[0]['total_worked'];
                 $pause_time = $check_user[0]['total_pause'];
+                $user_img = $result_user[0]['image'];
+                $rang = $result_user[0]['rang'];
             }
 
             $this->default_value = [
-                'user' => $result_user[0],
+                'user_name' => $result_user[0]['user_name'],
+                'user_img' => $user_img,
                 'current_time' => $current_time,
                 'status' => $status,
                 'work_time' => $work_time,
                 'pause_time' => $pause_time,
+                'rang' => $rang,
             ];
         } else {
             $this->view->redirect('/account/login');
@@ -173,15 +179,14 @@ class MainController extends Controller
 
     public function statisticAction()
     {
-            $default_value = $this->default_value;
-            $this->view->render('страница статистики', $default_value);
+        $default_value = $this->default_value;
+        $this->view->render('страница статистики', $default_value);
     }
-    
 
     public function profileAction()
     {
-            $default_value = $this->default_value;
-            $this->view->render('страница профиля', $default_value);
+        $default_value = $this->default_value;
+        $this->view->render('страница профиля', $default_value);
     }
 
 }

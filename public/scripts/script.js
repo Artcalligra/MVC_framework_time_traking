@@ -1,6 +1,7 @@
 /* var now_time;
 var seconds = minutes = hours = 0; */
 var work_time, break_time;
+var status;
 //var minutes = 59, seconds=50, hours = 1;
 
 /* window.onload = function () {
@@ -29,7 +30,7 @@ function Timer(date) {
     return buffer;
 } */
 
-function checkTime(i) {
+/* function checkTime(i) {
     if (i < 10) {
         i = "0" + i;
     }
@@ -53,22 +54,25 @@ function time() {
     let buffer;
     buffer = checkTime(hours) + "." + checkTime(minutes) + "." + checkTime(seconds);
     timer.innerHTML = buffer;
-}
+} */
 
 function get_time() {
     //now_time = setInterval(time, 1000);
     sendStatus('работаю');
+    status = "работаю";
 }
 
 
 function pause_time() {
     //clearInterval(now_time);
     sendStatus('перерыв');
+    status = "перерыв";
 }
 
 function end_pause_time() {
     //now_time = setInterval(time, 1000);
     sendStatus('закончить перерыв');
+    status = "работаю";
 }
 
 function stop_time() {
@@ -77,6 +81,7 @@ function stop_time() {
     time();
     clearInterval(now_time); */
     sendStatus('день завершён');
+    status = "день завершён";
 }
 
 function sendStatus(status) {
@@ -94,6 +99,7 @@ function sendStatus(status) {
                     $("#button_pause").removeClass("active");
                     $("#button_end_pause").removeClass("active");
                     $(".header-items__time-popup__pause-time").removeClass("active");
+                    status = "не работаю";
                     break;
                 case 'работаю':
                     $("#button_stop").addClass("active");
@@ -102,8 +108,7 @@ function sendStatus(status) {
                     $("#button_end_pause").removeClass("active");
                     $("#headerStatus").text("работаю");
                     $(".header-items__time-popup__pause-time").removeClass("active");
-                    clearInterval(break_time);
-                    work_time = setInterval(workTime, 1000);
+                    status = "работаю";
                     break;
                 case 'перерыв':
                     $("#button_stop").addClass("active");
@@ -112,8 +117,7 @@ function sendStatus(status) {
                     $("#button_start").removeClass("active");
                     $("#headerStatus").text("перерыв");
                     $(".header-items__time-popup__pause-time").addClass("active");
-                    clearInterval(work_time);
-                    break_time = setInterval(pauseTime, 1000);
+                    status = "перерыв";
                     break;
                 case 'день завершён':
                     $("#button_start").addClass("active");
@@ -122,8 +126,7 @@ function sendStatus(status) {
                     $("#button_pause").removeClass("active");
                     $("#headerStatus").text("день завершён");
                     $(".header-items__time-popup__pause-time").removeClass("active");
-                    clearInterval(work_time);
-                    clearInterval(break_time);
+                    status = "день завершён";
                     break;
 
             }
@@ -157,28 +160,22 @@ function pauseTime() {
 
 
 
-setInterval(mainTime, 1000);
-
-
 window.onload = function () {
-    onloadStatus = $('#headerStatus').html();
 
-    switch (onloadStatus) {
-        case 'работаю':
-            clearInterval(break_time);
-            work_time = setInterval(workTime, 1000);
-            break;
-        case 'перерыв':
-            clearInterval(work_time);
-            break_time = setInterval(pauseTime, 1000);
-            break;
-        case 'день завершён':
-            clearInterval(work_time);
-            clearInterval(break_time);
-            break;
-    }
+    status = $('#headerStatus').html();
 
-    //sendStatus(onloadStatus);
+    setInterval(() => {
+        mainTime();
+        switch (status) {
+            case 'работаю':
+                workTime();
+                break;
+            case 'перерыв':
+                pauseTime();
+                break;
+        }
+    }, 1000);
+
 }
 
 

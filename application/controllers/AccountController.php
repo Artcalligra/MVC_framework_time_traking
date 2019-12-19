@@ -48,7 +48,7 @@ class AccountController extends Controller
             $password = $_POST['password'];
             $password_confirmation = $_POST['password_confirm'];
             if ($password == $password_confirmation) {
-                if (preg_match('^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$^', $user_name) && preg_match('^((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).{5,}$^', $password)) {
+                if (preg_match('^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$^', $user_name) && preg_match('^((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[a-z]).{5,}$^', $password)) {
                     $result = $this->model->checkUser($user_name);
                     if ($result) {
                         $vars = [

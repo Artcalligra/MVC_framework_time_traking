@@ -95,11 +95,11 @@
                                 break;
                             }
                             ?>" type="button" value="Stop" onclick="stop_time()" />
-
                     </div>
                 </div>
                 <div class = "header-item header-items__user" id = "openPopupSettings">
-                    <div class = "header-items__user-name"><p><?php echo ($user['user_name']); ?></p></div>
+                    <!-- <div class = "header-items__user-img"></div> -->
+                    <div class = "header-items__user-name"><img src="<?php echo $user_img ?>" alt="user img"><span><?php echo $user_name; ?></span></div>
                     <div class = "header-items__user-popup" id = "itemPopupSettings"><a href = "/profile/user">Моя страница</a><br><a href = "/account/login">Выход</a> </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                     <a href = "/">Новости</a>
                     <a href = "/time_tracking">Учёт рабочего времени</a>
                     <a href = "/statistic" class = "disable <?php 
-                        switch ($user['rang']) {
+                        switch ($rang) {
                             case "admin":
                                 echo 'active';
                                 break;
