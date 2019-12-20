@@ -7,8 +7,9 @@ use application\lib\Db;
 
 class Main extends Model
 {
-    public function getNews(){
-        $result = $this->db->row('SELECT title,description FROM news ORDER BY id DESC');
+    public function getNews()
+    {
+        $result = $this->db->row('SELECT * FROM news ORDER BY id DESC');
         return $result;
     }
 
@@ -75,7 +76,7 @@ class Main extends Model
         ];
 
         $date = $this->db->row('UPDATE times SET status = :status, total_worked = total_worked + :total_worked, buffer_pause = :buffer_pause  WHERE user_id = :user_id AND date = :date', $params);
-        return $date; 
+        return $date;
     }
 
     public function continueWork($user_id, $date, $current_time, $total_pause)
@@ -91,7 +92,7 @@ class Main extends Model
         ];
 
         $date = $this->db->row('UPDATE times SET status = :status, total_pause = total_pause + :total_pause, buffer_start = :buffer_start  WHERE user_id = :user_id AND date = :date', $params);
-        return $date; 
+        return $date;
     }
 
     public function endDay($user_id, $date, $current_time, $total_work)
@@ -106,7 +107,36 @@ class Main extends Model
         ];
 
         $date = $this->db->row('UPDATE times SET status = :status, total_worked = total_worked + :total_worked WHERE user_id = :user_id AND date = :date', $params);
-        return $date; 
+        return $date;
+    }
+
+    public function addNews($user_id, $title, $image, $description)
+    {
+        $db = new Db;
+        //debug($image);
+        if (!empty($image)) {
+            echo '+';
+            $params = [
+                'user_id' => $user_id,
+                'title' => $title,
+                'image' => $image,
+                'description' => $description,
+            ];
+
+            $date = $db->query('INSERT INTO news SET user_id = :user_id, title = :title, image = :image, description = :description', $params);
+        } else {
+            echo '-';
+            $params = [
+                'user_id' => $user_id,
+                'title' => $title,
+                'description' => $description,
+            ];
+
+            $date = $db->query('INSERT INTO news SET user_id = :user_id, title = :title,  description = :description', $params);
+        }
+
+        return $date;
+
     }
 
 }

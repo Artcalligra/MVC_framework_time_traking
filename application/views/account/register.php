@@ -1,11 +1,11 @@
 <h2>Регистрация</h2>
 <form action = "/account/register" method = "POST">
     <p>Логин</p>
-    <p><input type="text" name = "user_name" class = "item-size"></p>
+    <p><input type="text" name = "user_name" class = "item-size" required></p>
     <p>Пароль</p>
-    <p><input type="password" name = "password" class = "item-size"></p>
+    <p><input type="password" name = "password" class = "item-size" required></p>
     <p>Подтверждение пароля</p>
-    <p><input type="password" name = "password_confirm" class = "item-size"></p>
+    <p><input type="password" name = "password_confirm" class = "item-size" required></p>
     <button type = "submit" class = "item-size">Sign up</button>
 </form>
 <div class = "block-form__sign">

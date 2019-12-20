@@ -2,9 +2,9 @@
 <h2>Авторизация</h2>
 <form action = "/account/login" method = "POST">
     <p>Логин</p>
-    <p><input type="text" name = "user_name" class = "item-size"></p>
+    <p><input type="text" name = "user_name" class = "item-size" required></p>
     <p>Пароль</p>
-    <p><input type="password" name = "password" class = "item-size"></p>
+    <p><input type="password" name = "password" class = "item-size" required></p>
     <button type = "submit" class = "item-size" >Sign in</button>
 </form>
 <div class = "block-form__sign">

@@ -6,6 +6,7 @@ return [
         'time_tracking',
         'statistic',
         'profile',
+        'news_create',
     ],
     'authorize' => [
         

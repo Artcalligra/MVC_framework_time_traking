@@ -181,22 +181,38 @@ window.onload = function () {
 
 jQuery(function ($) {
 
+    $(document).mouseup(function (e) {
 
-    $('#openPopupTime').click(function (e) {
-
-        if ($("#itemPopupTime").hasClass("active")) {
+        if (!$("#openPopupTime, #itemPopupTime").is(e.target) &&
+            $("#openPopupTime, #itemPopupTime").has(e.target).length === 0) {
             $("#itemPopupTime").removeClass("active");
         } else {
             $("#itemPopupTime").addClass("active");
         }
-    });
 
-    $('#openPopupSettings').click(function (e) {
-        if ($("#itemPopupSettings").hasClass("active")) {
+        if (!$("#openPopupSettings, #itemPopupSettings").is(e.target) &&
+            $("#openPopupSettings, #itemPopupSettings").has(e.target).length === 0) {
             $("#itemPopupSettings").removeClass("active");
         } else {
             $("#itemPopupSettings").addClass("active");
         }
     });
+
+    /*  $('#openPopupTime').click(function (e) {
+
+         if ($("#itemPopupTime").hasClass("active")) {
+             $("#itemPopupTime").removeClass("active");
+         } else {
+             $("#itemPopupTime").addClass("active");
+         }
+     }); 
+
+     $('#openPopupSettings').click(function (e) {
+        if ($("#itemPopupSettings").hasClass("active")) {
+            $("#itemPopupSettings").removeClass("active");
+        } else {
+            $("#itemPopupSettings").addClass("active");
+        }
+    }); */
 
 });

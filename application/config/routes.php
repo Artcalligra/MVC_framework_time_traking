@@ -16,24 +16,24 @@ return [
         'action' => 'statistic',
     ],
 
-    'news/create' => [
+    'news_create' => [
         'controller' => 'main',
         'action' => 'news_create',
     ],
 
-    'news/edit' => [
+    'news_edit' => [
         'controller' => 'main',
         'action' => 'news_edit',
     ],
 
-    'profile/user' => [
+    'profile' => [
         'controller' => 'main',
         'action' => 'profile',
     ],
 
-   /*  'news' => [
-        'controller' => 'main',
-        'action' => 'news',
+    /* 'news/create' => [
+        'controller' => 'news',
+        'action' => 'create',
     ], */
 /* 
     'contact' => [

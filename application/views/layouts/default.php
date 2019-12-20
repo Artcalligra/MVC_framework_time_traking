@@ -4,8 +4,10 @@
     <title><?php echo $title; ?></title>
     <link rel="stylesheet" type="text/css" href="/public/styles/style.css"/>
     <link rel="stylesheet" type="text/css" href="/public/styles/default.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/styles/news.css"/>
     <script type="text/javascript" src="/public/scripts/jquery.js"></script>
-	<script type="text/javascript" src="/public/scripts/script.js"></script>
+    <script type="text/javascript" src="/public/scripts/script.js"></script>
+    <script type="text/javascript" src="/public/scripts/calendar.js"></script>
 </head>
 
 <body>
@@ -97,9 +99,9 @@
                             ?>" type="button" value="Stop" onclick="stop_time()" />
                     </div>
                 </div>
-                <div class = "header-item header-items__user" id = "openPopupSettings">
+                <div class = "header-item header-items__user">
                     <!-- <div class = "header-items__user-img"></div> -->
-                    <div class = "header-items__user-name"><img src="<?php echo $user_img ?>" alt="user img"><span><?php echo $user_name; ?></span></div>
+                    <div class = "header-items__user-name"><img src="<?php echo $user_img ?>" alt="user img"><span id = "openPopupSettings"><?php echo $user_name; ?></span></div>
                     <div class = "header-items__user-popup" id = "itemPopupSettings"><a href = "/profile/user">Моя страница</a><br><a href = "/account/login">Выход</a> </div>
                 </div>
             </div>
