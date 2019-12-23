@@ -7,6 +7,9 @@ return [
         'statistic',
         'profile',
         'news_create',
+        'news',
+        'news_edit',
+        'profile_edit',
     ],
     'authorize' => [
         

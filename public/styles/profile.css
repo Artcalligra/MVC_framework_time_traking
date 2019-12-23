@@ -1,0 +1,19 @@
+/* .main-content__content__profile-item {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main-content__content__profile-item__name {
+    width: 100%;
+} */
+
+.main-content__content__profile-img{
+    width: 35%;
+}
+/* form {
+    width: 65%;
+} */
+
+.main-content__content__profile-img img {
+    width: 100%;
+}

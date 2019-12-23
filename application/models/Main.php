@@ -13,6 +13,12 @@ class Main extends Model
         return $result;
     }
 
+    public function getNewsById($id)
+    {
+        $result = $this->db->row('SELECT * FROM news WHERE id = "' . $id . '"');
+        return $result;
+    }
+
     public function getUserId($user_id)
     {
         $result = $this->db->row('SELECT * FROM users WHERE id="' . $user_id . '"');
@@ -133,6 +139,40 @@ class Main extends Model
             ];
 
             $date = $db->query('INSERT INTO news SET user_id = :user_id, title = :title,  description = :description', $params);
+        }
+
+        return $date;
+
+    }
+
+    public function updateNews($id, $title, $image, $description)
+    {
+        $db = new Db;
+        debug($image);
+        if (!empty($image)) {
+            if ($image == 0) {
+                $image = null;
+            } else {
+                $params = [
+                    'id' => $id,
+                    'title' => $title,
+                    'image' => $image,
+                    'description' => $description,
+                ];
+            }
+            echo '+';
+
+            $date = $db->query('UPDATE news SET title = :title, image = :image, description = :description WHERE id = :id', $params);
+        } else {
+            echo '-';
+            $params = [
+                'id' => $id,
+                'title' => $title,
+                'description' => $description,
+            ];
+
+            $date = $db->query('UPDATE news SET title = :title, description = :description WHERE id = :id', $params);
+
         }
 
         return $date;

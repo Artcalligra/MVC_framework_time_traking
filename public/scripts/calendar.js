@@ -1,4 +1,4 @@
-function createCalendar(elem, year, month) {
+/* function createCalendar(elem, year, month) {
 
     let mon = month - 1; // месяцы в JS идут от 0 до 11, а не от 1 до 12
     let d = new Date(year, mon);
@@ -48,5 +48,5 @@ window.onload = function () {
     let calendar = document.getElementById('calendar');
     createCalendar(calendar, 2019, 12);
     //alert(calendar);
-
-};
+    
+}; */

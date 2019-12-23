@@ -14,13 +14,13 @@
         </div>
             <?php }?>
         <div class ="main-content__content__news-item_title">
-            <h3><?php echo $val['title'] ?></h3>
+            <h3><a href = "news?id=<?php echo $val['id']; ?> "><?php echo $val['title'] ?></a></h3>
         </div>
         <div class ="main-content__content__news-item_description">
-            <p><?php echo $val['description'] ?></p>
+            <p><?php echo mb_strimwidth($val['description'], 0, 200) ?></p>
         </div>
         <div class ="main-content__content__news-item_button align-end">
-            <a href = "#">Read more</a>
+            <a href = "/news?id=<?php echo $val['id']; ?>">Read more</a>
         </div>
 
     </div>

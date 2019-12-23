@@ -21,6 +21,11 @@ return [
         'action' => 'news_create',
     ],
 
+    'news' => [
+        'controller' => 'main',
+        'action' => 'news',
+    ],
+
     'news_edit' => [
         'controller' => 'main',
         'action' => 'news_edit',
@@ -29,6 +34,11 @@ return [
     'profile' => [
         'controller' => 'main',
         'action' => 'profile',
+    ],
+
+    'profile_edit' => [
+        'controller' => 'main',
+        'action' => 'profile_edit',
     ],
 
     /* 'news/create' => [

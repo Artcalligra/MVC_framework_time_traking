@@ -49,3 +49,17 @@ form div {
 .item-size {
     width: 100%;
 }
+
+/* one news */
+
+.main-content__content__all-news-item{
+    line-height: 20px;
+}
+
+.main-content__content__all-news-item_image img{
+    width: 100%;
+}
+
+.main-content__content__all-news-item_description{
+    text-indent: 20px;
+}

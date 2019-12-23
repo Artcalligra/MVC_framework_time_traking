@@ -175,7 +175,6 @@ window.onload = function () {
                 break;
         }
     }, 1000);
-
 }
 
 
