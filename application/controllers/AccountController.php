@@ -18,7 +18,7 @@ class AccountController extends Controller
             $user_name = $_POST['user_name'];
             $password = md5($_POST['password']);
             $result = $this->model->getUser($user_name, $password);
-           // debug($result[0]['id']);
+            // debug($result[0]['id']);
             if ($result) {
                 $_SESSION['user_id'] = $result[0]['id'];
                 $_SESSION['rang'] = $result[0]['rang'];
@@ -42,10 +42,11 @@ class AccountController extends Controller
     public function registerAction()
     {
         $this->view->layout = 'login_register';
-        
+
         if (!empty($_POST)) {
             $user_name = $_POST['user_name'];
             $password = $_POST['password'];
+            $email = $_POST['email'];
             $password_confirmation = $_POST['password_confirm'];
             if ($password == $password_confirmation) {
                 if (preg_match('^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$^', $user_name) && preg_match('^((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[a-z]).{5,}$^', $password)) {
@@ -56,7 +57,7 @@ class AccountController extends Controller
                         ];
                         $this->view->render('страница регистрации', $vars);
                     } else {
-                        $result = $this->model->registerUser($user_name, md5($password));
+                        $result = $this->model->registerUser($user_name, md5($password), $email);
                         // debug($result);
                         $this->view->redirect('/account/login');
                     }

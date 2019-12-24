@@ -148,11 +148,19 @@ class Main extends Model
     public function updateNews($id, $title, $image, $description)
     {
         $db = new Db;
-        debug($image);
+        //debug($image);
         if (!empty($image)) {
-            if ($image == 0) {
-                $image = null;
+            if ($image == 1) {
+                //debug('1');
+                $params = [
+                    'id' => $id,
+                    'title' => $title,
+                    'image' => null,
+                    'description' => $description,
+                ];
+
             } else {
+                // debug('0') ;
                 $params = [
                     'id' => $id,
                     'title' => $title,
@@ -172,6 +180,42 @@ class Main extends Model
             ];
 
             $date = $db->query('UPDATE news SET title = :title, description = :description WHERE id = :id', $params);
+
+        }
+
+        return $date;
+
+    }
+
+    public function updateProfile($id, $user_name, $image, $email, $phone, $password)
+    {
+        $db = new Db;
+        //debug($image);
+        if (!empty($image)) {
+            echo '+';
+            $params = [
+                'id' => $id,
+                'user_name' => $user_name,
+                'image' => $image,
+                'email' => $email,
+                'phone' => $phone,
+                'password' => $password,
+            ];
+
+            $date = $db->query('UPDATE users SET user_name = :user_name, image = :image, email = :email, phone = :phone, password = :password WHERE id = :id', $params);
+        } else {
+            echo '-';
+            $params = [
+                'id' => $id,
+                'user_name' => $user_name,
+                'email' => $email,
+                'phone' => $phone,
+                'password' => $password,
+            ];
+
+            
+            $date = $db->query('UPDATE users SET user_name = :user_name, email = :email, phone = :phone, password = :password WHERE id = :id', $params);
+           
 
         }
 

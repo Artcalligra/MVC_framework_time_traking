@@ -1,7 +1,7 @@
 
 <h2>Авторизация</h2>
 <form action = "/account/login" method = "POST">
-    <p>Логин</p>
+    <p>Имя</p>
     <p><input type="text" name = "user_name" class = "item-size" required></p>
     <p>Пароль</p>
     <p><input type="password" name = "password" class = "item-size" required></p>

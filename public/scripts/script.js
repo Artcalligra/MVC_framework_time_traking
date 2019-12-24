@@ -60,6 +60,7 @@ function get_time() {
     //now_time = setInterval(time, 1000);
     sendStatus('работаю');
     status = "работаю";
+    console.log(status);
 }
 
 

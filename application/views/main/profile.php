@@ -9,7 +9,7 @@
         </div>
             <p><?php if (isset($message)) {
     echo ($message);}?></p>
-        <div class = "main-content__content__profile-img"><img src="<?php echo $user_img ?>" alt="user img"></div>
+        <div class = "main-content__content__profile-img"><img src="<?php echo $user['image'] ?>" alt="user img"></div>
         <form enctype="multipart/form-data" action = "/profile?id=<?php echo $_SESSION['user_id']; ?>" method = "POST">
             <fieldset>
                 <legend>Контактная информация</legend>
@@ -41,8 +41,15 @@
                     <button type = "submit" class = "" >Сохранить</button>
                 </div> -->
         </form>
-        <div class = "mmain-content__content__profile-item__edit">
+
+        <?php if($user['id']==$_SESSION['user_id'] || $_SESSION['rang']=='admin'){?>
+            <div class = "main-content__content__profile-item__edi">
+                <a href = "/profile_edit?id=<?php echo $user['id']; ?>">Редактировать</a>
+            </div>
+        <?php } ?>
+
+        <!-- <div class = "main-content__content__profile-item__edit">
             <a href = "/profile_edit?id=<?php echo $user['id']; ?>">Редактировать</a>
-        </div>
+        </div> -->
     </div>
 </div>

@@ -7,13 +7,11 @@
     <link rel="stylesheet" type="text/css" href="/public/styles/style.css"/>
     <link rel="stylesheet" type="text/css" href="/public/styles/default.css"/>
     <link rel="stylesheet" type="text/css" href="/public/styles/news.css"/>
-    <link rel="stylesheet" type="text/css" href="/public/styles/tracking.css"/>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="/public/scripts/jquery.js"></script>
     <script type="text/javascript" src="/public/scripts/script.js"></script>
-    <script type="text/javascript" src="/public/scripts/calendar.js"></script>
 </head>
 
 <body>
@@ -21,7 +19,7 @@
         <div class = "container">
             <div class = "row header-items">
                 <!-- <div class = "header-items"> -->
-                    <div class = "header-item header-items__logo col-md-7">
+                    <div class = "header-item header-items__logo col-md-6">
                         <a href="/"><img src="/public/images/logo.png" alt="logo"></a>
                     </div>
                     <div class= "header-item header-items__times col-md-3">
@@ -106,9 +104,12 @@
                                 ?>" type="button" value="Stop" onclick="stop_time()" />
                         </div>
                     </div>
-                    <div class = "header-item header-items__user col-md-2">
+                    <div class = "header-item header-items__user col-md-3">
                         <!-- <div class = "header-items__user-img"></div> -->
-                        <div class = "header-items__user-name"><img src="<?php echo $user_img ?>" alt="user img"><span id = "openPopupSettings"><?php echo $user_name; ?></span></div>
+                        <div class = "row header-items__user">
+                            <div class= "header-items__user-img"><img src="<?php echo $user_img ?>" alt="user img"></div>
+                            <div class ="header-items__user-name " id = "openPopupSettings"><p><?php echo $user_name; ?></p></div>
+                        </div>
                         <div class = "header-items__user-popup" id = "itemPopupSettings"><a href = "/profile?id=<?php echo $_SESSION['user_id']; ?>">Моя страница</a><br><a href = "/account/login">Выход</a> </div>
                     </div>
                 </div>
