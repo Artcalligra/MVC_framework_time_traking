@@ -8,12 +8,16 @@ class ApiController extends Controller
 {
     public function timeAction()
     {
-        //$user_id = $_SESSION['user_id'];
-        // $adduser = $this->model->addUser($user_id);
-        // $status = $this->model->getStatus($user_id);
-        // debug($status);
+
         $current_time = time();
         $date = date("d:m:Y", time());
+
+        /* $today = getdate();
+        $d = $today['mday'] - 1;
+        $m = $today['mon'];
+        $y = $today['year'];
+        $yesterday_day = $d . ":" . $m . ":" . $y;
+        debug($yesterday_day); */
 
         /* if (isset($_SESSION['user_id'])) {
         $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
@@ -36,27 +40,53 @@ class ApiController extends Controller
 
                     break;
                 case "перерыв":
-                    $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
-                    $total_work = $current_time - $check_user[0]['buffer_start'];
-                    $add_pause = $this->model->addPause($_SESSION['user_id'], $date, $current_time, $total_work);
-
+                    $check_user_by_id = $this->model->checkUserByIdLast($_SESSION['user_id']);
+                    if ($date != $check_user_by_id[0]['date']) {
+                        $check_user = $this->model->checkUser($_SESSION['user_id'], $check_user_by_id[0]['date']);
+                        $total_work = $current_time - $check_user[0]['buffer_start'];
+                        $add_pause = $this->model->addPause($_SESSION['user_id'], $check_user_by_id[0]['date'], $current_time, $total_work);
+                    } else {
+                        $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
+                        $total_work = $current_time - $check_user[0]['buffer_start'];
+                        $add_pause = $this->model->addPause($_SESSION['user_id'], $date, $current_time, $total_work);
+                    }
                     break;
                 case "закончить перерыв":
-                    $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
-                    $total_pause = $current_time - $check_user[0]['buffer_pause'];
-                    //debug($total_pause);
-                    $continue_work = $this->model->continueWork($_SESSION['user_id'], $date, $current_time, $total_pause);
-                    //debug($continue_work);
+                    $check_user_by_id = $this->model->checkUserByIdLast($_SESSION['user_id']);
+                    if ($date != $check_user_by_id[0]['date']) {
+                        $check_user = $this->model->checkUser($_SESSION['user_id'], $check_user_by_id[0]['date']);
+                        $total_pause = $current_time - $check_user[0]['buffer_pause'];
+                        $continue_work = $this->model->continueWork($_SESSION['user_id'], $check_user_by_id[0]['date'], $current_time, $total_pause);
+                    } else {
+                        $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
+                        $total_pause = $current_time - $check_user[0]['buffer_pause'];
+                        $continue_work = $this->model->continueWork($_SESSION['user_id'], $date, $current_time, $total_pause);
+                    }
+
                     break;
                 case 'день завершён':
-                    $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
-                    $total_work = $current_time - $check_user[0]['buffer_start'];
-                    $end_day = $this->model->endDay($_SESSION['user_id'], $date, $current_time, $total_work);
+                    $check_user_by_id = $this->model->checkUserByIdLast($_SESSION['user_id']);
+                    if ($date != $check_user_by_id[0]['date']) {
+                        $check_user = $this->model->checkUser($_SESSION['user_id'], $check_user_by_id[0]['date']);
+                        $total_work = $current_time - $check_user[0]['buffer_start'];
+                        $end_day = $this->model->endDay($_SESSION['user_id'], $check_user_by_id[0]['date'], $current_time, $total_work);
+                    } else {
+                        $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
+                        $total_work = $current_time - $check_user[0]['buffer_start'];
+                        $end_day = $this->model->endDay($_SESSION['user_id'], $date, $current_time, $total_work);
+                    }
+
                     break;
             }
+            $check_user_by_id = $this->model->checkUserByIdLast($_SESSION['user_id']);
+            if ($date != $check_user_by_id[0]['date']) {
+                $check_user = $this->model->checkUser($_SESSION['user_id'], $check_user_by_id[0]['date']);
+                $this->view->message($check_user[0]);
+            } else {
+                $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
+                $this->view->message($check_user[0]);
+            }
 
-            $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
-            $this->view->message($check_user[0]);
         }
     }
 

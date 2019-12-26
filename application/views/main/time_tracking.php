@@ -1,52 +1,94 @@
 <link rel="stylesheet" type="text/css" href="/public/styles/tracking.css"/>
-<script type="text/javascript" src="/public/scripts/calendar.js"></script>
+<!-- <script type="text/javascript" src="/public/scripts/calendar.js"></script> -->
 <div class = "main-content__content__tracking">
     <div class = "main-content__content__tracking__back">
         <a href = "/">Назад</a>
     </div>
     <h2>Отчет по рабочему времени</h2>
+    <select id="selectYear"> </select>
     <select id="selectMonth"> </select>
     <div id = "calendar"></div>
+    <!-- <button type = "submit" id="open" >Открыть</button> -->
 
 </div>
 <script>
 
+var current_date = new Date();
+
 const monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
   "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
-var list = document.getElementById('selectMonth');
+
+var getMonth = document.getElementById('selectMonth');
+var getYear = document.getElementById("selectYear");
+var calendar = document.getElementById('calendar');
+var year, month;
+var selectYear = current_date.getFullYear();
 
 window.onload = function () {
 
   for (var i = 0; i < monthNames.length; i++)
     {
-      var option = document.createElement('option');
+      let option = document.createElement('option');
       option.innerHTML = monthNames[i];
       //option.value = "myvalue";
-      list.appendChild(option);
+      getMonth.appendChild(option);
    }
 
-   current_date = new Date();
-   year = current_date.getFullYear();
-   month = current_date.getMonth();
+   for (var i = 0; i < 5; i++)
+    {
+      let option = document.createElement('option');
+      option.innerHTML = selectYear-1;
+      selectYear+=1;
+      document.getElementById('selectYear').appendChild(option);
+   }
 
-   select = document.querySelector('#selectMonth').getElementsByTagName('option');
-   for (let i = 0; i < select.length; i++) {
-    if (select[i].value == monthNames[month]) select[i].selected = true;
-}
-   console.log(month);
+  month = current_date.getMonth();
+  year = current_date.getFullYear();
+
+  inserSelectMonth = document.querySelector('#selectMonth').getElementsByTagName('option');
+  for (let i = 0; i < inserSelectMonth.length; i++) {
+    if (inserSelectMonth[i].value == monthNames[month]) inserSelectMonth[i].selected = true;
+  }
+
+  inserSelectYear = document.querySelector('#selectYear').getElementsByTagName('option');
+  for (let i = 0; i < inserSelectYear.length; i++) {
+    if (inserSelectYear[i].value == year) inserSelectYear[i].selected = true;
+  }
    createCalendar(calendar, year, month);
+
+   $.ajax({
+        type: "GET",
+        url: "time_tracking",
+        data: 'user=getUserTime',
+        success: function (msg) {
+         let userTime = JSON.parse(msg);
+         console.log(userTime);
+         /*  $.each(userTime, function(index, value){
+          console.log("INDEX: " + index + " VALUE: " + value);
+          $.each(value, function(index1, value1){
+          console.log(index1 + '----' + value1);
+          });
+          }); */
+
+        }
+      });
 
 };
 
+
   document.getElementById('selectMonth').addEventListener('change', function() {
 
-    let num = list.selectedIndex;
-    current_date = new Date()
-    year = current_date.getFullYear();
-    month = monthNames[current_date.getMonth()];
-    console.log(num+1);
-    let calendar = document.getElementById('calendar');
-  createCalendar(calendar, year, num+1);
+    month = getMonth.selectedIndex;
+    year = getYear.options[getYear.selectedIndex].innerHTML;
+    createCalendar(calendar, year, month+1);
+
+  });
+
+  document.getElementById('selectYear').addEventListener('change', function() {
+
+    year = getYear.options[getYear.selectedIndex].innerHTML;
+    month = getMonth.selectedIndex;
+    createCalendar(calendar, year, month+1);
 
   });
 
@@ -94,6 +136,10 @@ function getDay(date) { // получить номер дня недели, от
   if (day == 0) day = 7; // сделать воскресенье (0) последним днем
   return day - 1;
 }
+
+/* const arr2 = arr.map( (item) => {
+  return item.date = new Date(item.date)
+}) */
 
 
   </script>

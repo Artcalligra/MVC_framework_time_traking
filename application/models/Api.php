@@ -20,6 +20,28 @@ class Api extends Model
         return $date;
     }
 
+   /*  public function checkUserById($user_id)
+    {
+        $db = new Db;
+        $params = [
+            'user_id' => $user_id,
+        ];
+
+        $date = $this->db->row('SELECT * FROM times WHERE user_id = :user_id', $params);
+        return $date;
+    } */
+
+    public function checkUserByIdLast($user_id)
+    {
+        $db = new Db;
+        $params = [
+            'user_id' => $user_id,
+        ];
+
+        $date = $this->db->row('SELECT * FROM times WHERE user_id = :user_id ORDER BY id DESC LIMIT 1', $params);
+        return $date;
+    }
+
     public function addUser($user_id, $date, $start)
     {
         $db = new Db;
@@ -92,9 +114,10 @@ class Api extends Model
             'user_id' => $user_id,
             'date' => $date,
             'total_worked' => $total_work,
+            'end' => $current_time,
         ];
 
-        $date = $this->db->row('UPDATE times SET status = :status, total_worked = total_worked + :total_worked WHERE user_id = :user_id AND date = :date', $params);
+        $date = $this->db->row('UPDATE times SET status = :status, total_worked = total_worked + :total_worked, end= :end  WHERE user_id = :user_id AND date = :date', $params);
         return $date; 
     }
 
