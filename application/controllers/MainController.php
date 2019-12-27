@@ -14,15 +14,21 @@ class MainController extends Controller
     {
         if (isset($_SESSION['user_id'])) {
             $userTime = null;
-            $result_user = $this->model->getUserId($_SESSION['user_id']);
 
             $current_time = date("H:i:s", time());
-            $date = date("d:m:Y", time());
+            $full_date = date("d:m:Y", time());
+            $date = str_replace(":", "", $full_date);
+
             $status = "не работаю";
             $work_time = 0;
             $pause_time = 0;
             $user_img = "public/images/default_user.jpg";
             $rang = $_SESSION['rang'];
+
+            $result_user = $this->model->getUserId($_SESSION['user_id']);
+            if ($result_user) {
+                $user_img = $result_user[0]['image'];
+            }
 
             $check_user_by_id = $this->model->checkUserByIdLast($_SESSION['user_id']);
             //debug($check_user_by_id[0]['date']);
@@ -38,7 +44,7 @@ class MainController extends Controller
                 $work_time = $check_user[0]['total_worked'];
                 $pause_time = $check_user[0]['total_pause'];
                 //if (!empty($result_user[0]['image'])) {
-                $user_img = $result_user[0]['image'];
+                // $user_img = $result_user[0]['image'];
                 // }
 
             }
@@ -141,7 +147,7 @@ class MainController extends Controller
 
                         if (is_uploaded_file($_FILES['image']['tmp_name'])) {
                             $uploaddir = $_SERVER["DOCUMENT_ROOT"] . '/public/images/user_images/';
-                            $file_name = '/public/images/user_images/' . $_FILES['image']['name'] . '_' . time();
+                            $file_name = '/public/images/user_images/' . '_' . time() . $_FILES['image']['name'];
                             $uploadfile = $uploaddir . basename($file_name);
                             move_uploaded_file($_FILES['image']['tmp_name'], $uploadfile);
                         }
@@ -175,7 +181,7 @@ class MainController extends Controller
                                 ];
                             }
                         } else {
-                            $update_user = $this->model->updateProfile($_GET['id'], $user_name, $file_name, $email, $phone, md5($password));
+                            $update_user = $this->model->updateProfile($_GET['id'], $user_name, $file_name, $email, $phone, $password);
                             if ($update_user) {
                                 $this->view->redirect('profile_edit?id=' . $_GET['id']);
                             } else {
@@ -274,7 +280,7 @@ class MainController extends Controller
 
                     if (is_uploaded_file($_FILES['image']['tmp_name'])) {
                         $uploaddir = $_SERVER["DOCUMENT_ROOT"] . '/public/images/user_images/';
-                        $file_name = '/public/images/user_images/' . $_FILES['image']['name'] . '_' . time();
+                        $file_name = '/public/images/user_images/' . '_' . time() . $_FILES['image']['name'];
                         $uploadfile = $uploaddir . basename($file_name);
                         move_uploaded_file($_FILES['image']['tmp_name'], $uploadfile);
                     }

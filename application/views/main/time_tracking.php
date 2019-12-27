@@ -8,7 +8,29 @@
     <select id="selectYear"> </select>
     <select id="selectMonth"> </select>
     <div id = "calendar"></div>
-    <!-- <button type = "submit" id="open" >Открыть</button> -->
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Отчёт за день</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+      </div>
+      <div class="modal-body">
+      <!-- <p class="selectedDay"></p> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="selectedDay">вввв</div>
 
 </div>
 <script>
@@ -21,10 +43,11 @@ const monthNames = ["Январь", "Февраль", "Март", "Апрель"
 var getMonth = document.getElementById('selectMonth');
 var getYear = document.getElementById("selectYear");
 var calendar = document.getElementById('calendar');
-var year, month;
+var year, month, userTime, idDivClick;
 var selectYear = current_date.getFullYear();
 
-window.onload = function () {
+window.addEventListener("load",function(event) {
+
 
   for (var i = 0; i < monthNames.length; i++)
     {
@@ -54,26 +77,53 @@ window.onload = function () {
   for (let i = 0; i < inserSelectYear.length; i++) {
     if (inserSelectYear[i].value == year) inserSelectYear[i].selected = true;
   }
-   createCalendar(calendar, year, month);
+   createCalendar(calendar, year, month+1);
 
-   $.ajax({
+   getTime();
+
+   document.getElementById('tableCalendar').onclick = function(event) {
+    idDivClick = event.target.closest('td').querySelector('div').id;
+    let divValue = event.target.closest('td').querySelector('div').innerHTML;
+    createModal(idDivClick,divValue);
+    };
+
+    
+
+});
+
+function createModal(id,val){
+     // if(val){
+    const selectedDay = document.querySelector('.selectedDay').innerHTML = id;
+    console.log(selectedDay)
+    //$('#selectedDay').html(id);
+    console.log(id);
+    //$('#myModal').modal('show');
+    //}
+    }
+
+
+
+
+/* $(document).ready(function() {
+    $("#myModal").modal('show');
+  }); */
+
+
+function getTime(){
+  $.ajax({
         type: "GET",
         url: "time_tracking",
         data: 'user=getUserTime',
         success: function (msg) {
-         let userTime = JSON.parse(msg);
-         console.log(userTime);
-         /*  $.each(userTime, function(index, value){
-          console.log("INDEX: " + index + " VALUE: " + value);
-          $.each(value, function(index1, value1){
-          console.log(index1 + '----' + value1);
+        userTime = JSON.parse(msg);
+        // console.log(userTime);
+         userTime.forEach((item)=>{
+           //console.log(item);
+          $('#'+item.date).html((item.total_worked/3600).toFixed(2)>=0?(item.total_worked/3600).toFixed(2):($().css('color','green')));
           });
-          }); */
-
         }
       });
-
-};
+}
 
 
   document.getElementById('selectMonth').addEventListener('change', function() {
@@ -81,6 +131,7 @@ window.onload = function () {
     month = getMonth.selectedIndex;
     year = getYear.options[getYear.selectedIndex].innerHTML;
     createCalendar(calendar, year, month+1);
+    getTime();
 
   });
 
@@ -89,6 +140,7 @@ window.onload = function () {
     year = getYear.options[getYear.selectedIndex].innerHTML;
     month = getMonth.selectedIndex;
     createCalendar(calendar, year, month+1);
+    getTime();
 
   });
 
@@ -97,7 +149,7 @@ window.onload = function () {
       let mon = month - 1; // месяцы в JS идут от 0 до 11, а не от 1 до 12
       let d = new Date(year, mon);
 
-      let table = '<table><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th><th>вс</th></tr><tr>';
+      let table = '<table id="tableCalendar"><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th><th>вс</th></tr><tr>';
 
       // пробелы для первого ряда
       // с понедельника до первого дня месяца
@@ -108,8 +160,11 @@ window.onload = function () {
 
       // <td> ячейки календаря с датами
       while (d.getMonth() == mon) {
-          table += '<td>' + d.getDate() +'<div class =day_'+d.getDate()+'></div>'+'</td>';
-
+          //table += '<td>' + d.getDate() +'<div class =day_'+d.getDate()+'></div>'+'</td>';
+          table += `<td>${d.getDate()}<div id="${
+          (d.getDate()<10?'0'+d.getDate():d.getDate())+''+
+          ((d.getMonth()+1)<10?'0'+(d.getMonth()+1):(d.getMonth()+1))+''+
+          d.getFullYear()}"></div></td>`;
           if (getDay(d) % 7 == 6) { // вс, последний день - перевод строки
               table += '</tr><tr>';
           }
@@ -136,10 +191,5 @@ function getDay(date) { // получить номер дня недели, от
   if (day == 0) day = 7; // сделать воскресенье (0) последним днем
   return day - 1;
 }
-
-/* const arr2 = arr.map( (item) => {
-  return item.date = new Date(item.date)
-}) */
-
 
   </script>

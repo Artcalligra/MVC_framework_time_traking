@@ -10,8 +10,9 @@ class ApiController extends Controller
     {
 
         $current_time = time();
-        $date = date("d:m:Y", time());
-
+        $full_date = date("d:m:Y", time());
+        $date = str_replace(":", "", $full_date);
+        
         /* $today = getdate();
         $d = $today['mday'] - 1;
         $m = $today['mon'];

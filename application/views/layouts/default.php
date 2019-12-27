@@ -8,9 +8,9 @@
     <link rel="stylesheet" type="text/css" href="/public/styles/default.css"/>
     <link rel="stylesheet" type="text/css" href="/public/styles/news.css"/>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script type="text/javascript" src="/public/scripts/jquery.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="/public/scripts/script.js"></script>
 </head>
 
@@ -22,17 +22,17 @@
                     <div class = "header-item header-items__logo col-md-6">
                         <a href="/"><img src="/public/images/logo.png" alt="logo"></a>
                     </div>
-                    <div class= "header-item header-items__times col-md-3">
-                        <div class = "header-items__show" id = "openPopupTime"> 
+                    <div class= "header-item header-items__times col-md-3 dropdown open">
+                        <div class = "header-items__show dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <!-- id = "openPopupTime" -->
                             <div class = "header-items__time" id="headerTime"><?php echo $current_time; ?></div>
                             <div class = "header-items__status" id = "headerStatus"><?php echo $status; ?></div>
                         </div>               
-                        <div class = "header-items__time-popup" id = "itemPopupTime">
-                            <div class = "header-items__time-popup__work-time">
+                        <div class = "header-items__time-popup dropdown-menu" id = "itemPopupTime">
+                            <div class = "header-items__time-popup__work-time dropdown-item">
                                 <span>Длительность рабочего дня: </span>
                                 <div id="timer_work"><?php date_default_timezone_set("UTC"); echo $date = date("H:i:s", $work_time); ?></div>
                             </div>
-                            <div class = "header-items__time-popup__pause-time <?php 
+                            <div class = "header-items__time-popup__pause-time dropdown-item <?php 
                             switch ($status) {
                                 case "не работаю":
                                     break;
@@ -47,7 +47,8 @@
                                 ?>">
                                 <span>Длительность перерыва: </span>
                                 <div id="timer_pause"><?php echo $date = date("H:i:s", $pause_time); ?></div>
-                            </div>                        
+                            </div>   
+                            <div class = "header-items__time-popup__button dropdown-item" >                    
                             <input id="button_start" class = "disable <?php 
                             switch ($status) {
                                 case "не работаю":
@@ -102,15 +103,17 @@
                                     break;
                                 }
                                 ?>" type="button" value="Stop" onclick="stop_time()" />
+                                </div>
                         </div>
                     </div>
-                    <div class = "header-item header-items__user col-md-3">
+                    <div class = "header-item header-items__user col-md-3 ">
                         <!-- <div class = "header-items__user-img"></div> -->
-                        <div class = "row header-items__user">
+                        <div class = "row header-items__user dropdown open">
                             <div class= "header-items__user-img"><img src="<?php echo $user_img ?>" alt="user img"></div>
-                            <div class ="header-items__user-name " id = "openPopupSettings"><p><?php echo $user_name; ?></p></div>
+                            <div class ="header-items__user-name dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><p><?php echo $user_name; ?></p></div><!-- id = "openPopupSettings" -->
+                            <div class = "header-items__user-popup dropdown-menu" id = "itemPopupSettings"><a href = "/profile?id=<?php echo $_SESSION['user_id']; ?>" class="dropdown-item">Моя страница</a><br><a href = "/account/login" class="dropdown-item">Выход</a> </div>
                         </div>
-                        <div class = "header-items__user-popup" id = "itemPopupSettings"><a href = "/profile?id=<?php echo $_SESSION['user_id']; ?>">Моя страница</a><br><a href = "/account/login">Выход</a> </div>
+                        
                     </div>
                 </div>
             <!-- </div> -->

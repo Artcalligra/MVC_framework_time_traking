@@ -60,7 +60,7 @@ function get_time() {
     //now_time = setInterval(time, 1000);
     sendStatus('работаю');
     status = "работаю";
-    console.log(status);
+    //console.log(status);
 }
 
 
@@ -93,6 +93,7 @@ function sendStatus(status) {
         success: function (msg) {
             //console.log("Прибыли данные: " + msg);
             person = JSON.parse(msg);
+           // console.log(person);
             switch (person["status"]) {
                 case 'не работаю':
                     $("#button_start").addClass("active");
@@ -129,7 +130,6 @@ function sendStatus(status) {
                     $(".header-items__time-popup__pause-time").removeClass("active");
                     status = "день завершён";
                     break;
-
             }
         }
     });
@@ -179,7 +179,7 @@ window.onload = function () {
 }
 
 
-jQuery(function ($) {
+/* jQuery(function ($) {
 
     $(document).mouseup(function (e) {
 
@@ -196,7 +196,7 @@ jQuery(function ($) {
         } else {
             $("#itemPopupSettings").addClass("active");
         }
-    });
+    }); */
 
     /*  $('#openPopupTime').click(function (e) {
 
@@ -213,6 +213,6 @@ jQuery(function ($) {
         } else {
             $("#itemPopupSettings").addClass("active");
         }
-    }); */
+    }); 
 
-});
+});*/
