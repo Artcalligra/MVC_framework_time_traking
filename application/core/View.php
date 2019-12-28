@@ -51,7 +51,14 @@ class View
 
     public function message($arr)
     {
-       exit(json_encode($arr));
+        //exit(json_encode(['1' => $arr, '2' => $arr2]));
+        exit(json_encode($arr));
+    }
+
+    public function duomessage($arr,$arr2)
+    {
+        exit(json_encode(['1' => $arr, '2' => $arr2]));
+        // exit(json_encode($arr));
     }
 
     public function location($url)

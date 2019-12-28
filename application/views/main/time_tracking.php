@@ -1,38 +1,54 @@
 <link rel="stylesheet" type="text/css" href="/public/styles/tracking.css"/>
 <!-- <script type="text/javascript" src="/public/scripts/calendar.js"></script> -->
 <div class = "main-content__content__tracking">
-    <div class = "main-content__content__tracking__back">
-        <a href = "/">Назад</a>
-    </div>
-    <h2>Отчет по рабочему времени</h2>
-    <select id="selectYear"> </select>
-    <select id="selectMonth"> </select>
-    <div id = "calendar"></div>
+  <div class = "main-content__content__tracking__back">
+      <a href = "/">Назад</a>
+  </div>
+  <h2>Отчет по рабочему времени</h2>
+  <select id="selectYear"> </select>
+  <select id="selectMonth"> </select>
+  <div id = "calendar"></div>
+  <div class = "main-content__content__tracking-worked row">
+    <div class = "col-md-4 main-content__content__tracking-worked__hours"><p>Отработано часов: <b class = "workedHours"></b></p></div>
+    <div class = "col-md-4 main-content__content__tracking-worked__percent"><p>Процент: <b class = "workedPercent"></b></p></div>
+    <div class = "col-md-4 main-content__content__tracking-worked__salary"><p>ЗП: <b class = "workedSalary"></b></p></div>
+  </div>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Отчёт за день</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-
-      </div>
-      <div class="modal-body">
-      <!-- <p class="selectedDay"></p> -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Отчёт за день</h4>
+          <p class="selectedDay"></p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class = "row">
+            <div class = "col-md-6 modal-body__time-start"> Время начала: <p class="timeStart"></p>
+            </div>
+            <div class = "col-md-6 modal-body__time-end"> Время окончания: <p class="timeEnd"></p>
+            </div>
+          </div>
+          <div class = "row">
+            <div class = "col-md-6 modal-body__time-pause"> Перерыв: <p class="timePause"></p>
+            </div>
+            <div class = "col-md-6 modal-body__time-all"> Всего отработано: <p class="timeAll"></p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<div class="selectedDay">вввв</div>
 
 </div>
+
+
 <script>
 
 var current_date = new Date();
@@ -40,11 +56,12 @@ var current_date = new Date();
 const monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
   "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
 
-var getMonth = document.getElementById('selectMonth');
-var getYear = document.getElementById("selectYear");
-var calendar = document.getElementById('calendar');
+const getMonth = document.getElementById('selectMonth');
+const getYear = document.getElementById("selectYear");
+const calendar = document.getElementById('calendar');
 var year, month, userTime, idDivClick;
-var selectYear = current_date.getFullYear();
+let selectYear = current_date.getFullYear();
+let dbDate;
 
 window.addEventListener("load",function(event) {
 
@@ -87,40 +104,96 @@ window.addEventListener("load",function(event) {
     createModal(idDivClick,divValue);
     };
 
-    
+
 
 });
 
 function createModal(id,val){
-     // if(val){
-    const selectedDay = document.querySelector('.selectedDay').innerHTML = id;
-    console.log(selectedDay)
-    //$('#selectedDay').html(id);
-    console.log(id);
-    //$('#myModal').modal('show');
-    //}
+  if(val){
+    getTime();
+    dot='.';
+    let stringDay=id.substring(0, 2) + dot;
+    let stringMonth = id.substring(2, 4) + dot;
+    let stringYear = id.substring(4, 8);
+    const selectedDay = document.querySelector('.selectedDay').innerHTML = stringDay + stringMonth + stringYear;
+    const timeStart = document.querySelector('.timeStart');
+    const timeEnd = document.querySelector('.timeEnd');
+    const timePause = document.querySelector('.timePause');
+    const timeAll = document.querySelector('.timeAll');
+
+    
+
+    console.log(selectedDay);
+    console.log(userTime);
+    userTime.forEach((item)=>{
+      
+      if(item.date == id){
+        let timeStartConvert = convertTime(item.start);
+        timeStart.innerHTML = timeStartConvert;
+        //console.log(item.end);
+        let timeEndConvert = convertTime(item.end);
+        timeEnd.innerHTML = timeEndConvert;
+        let timePauseConvert = convertTimeUTC(item.total_pause);
+        timePause.innerHTML = timePauseConvert;
+        let timeAllConvert = convertTimeUTC(item.total_worked);
+        timeAll.innerHTML = timeAllConvert;
+      }
+    });
+    $('#myModal').modal('show');
+  }
+}
+
+function convertTime(checkDate){
+  let date = new Date(checkDate * 1000 );
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let time = hours + ' часов ' + minutes + ' минут';
+  return time;
+}
+
+function convertTimeUTC(checkDate){
+  let date = new Date(checkDate * 1000 );
+  let hours = date.getUTCHours();
+  let minutes = date.getUTCMinutes();
+  let time = hours + ' часов ' + minutes + ' минут';
+  return time;
+}
+
+  /* function checkTime(i) {
+    if (i < 10) {
+        i = "0" + i;
     }
-
-
-
-
-/* $(document).ready(function() {
-    $("#myModal").modal('show');
-  }); */
-
+    return i;
+  } */
 
 function getTime(){
+
+  // $('.workedHours').empty();
+  /* $('.workedHours').html('0');*/
+  let countWorkedHours = 0; 
+
   $.ajax({
         type: "GET",
         url: "time_tracking",
         data: 'user=getUserTime',
         success: function (msg) {
-        userTime = JSON.parse(msg);
-        // console.log(userTime);
+        userDate = JSON.parse(msg);
+        userTime = userDate[1];
          userTime.forEach((item)=>{
-           //console.log(item);
           $('#'+item.date).html((item.total_worked/3600).toFixed(2)>=0?(item.total_worked/3600).toFixed(2):($().css('color','green')));
+          countWorkedHours += parseInt(item.total_worked/3600); 
+          dbDate = item.date;       
           });
+        $('.workedHours').html(countWorkedHours);
+
+        userDate[2].forEach((item)=>{
+          if (item.date = dbDate.substring(2, 8)){
+            console.log(item.date );
+          }
+           
+                  
+        });
+
         }
       });
 }

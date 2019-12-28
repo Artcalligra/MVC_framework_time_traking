@@ -49,6 +49,12 @@ class Main extends Model
         return $date;
     }
 
+    public function getHours()
+    {
+        $date = $this->db->row('SELECT * FROM month_hours');
+        return $date;
+    }
+
     public function checkUserByIdLast($user_id)
     {
         $db = new Db;

@@ -32,10 +32,12 @@ class MainController extends Controller
 
             $check_user_by_id = $this->model->checkUserByIdLast($_SESSION['user_id']);
             //debug($check_user_by_id[0]['date']);
-            if ($date != $check_user_by_id[0]['date']) {
+            if ($date != $check_user_by_id[0]['date'] && $status = $check_user_by_id[0]['status']!= 'день завершён') {
                 $status = $check_user_by_id[0]['status'];
                 $work_time = $check_user_by_id[0]['total_worked'];
                 $pause_time = $check_user_by_id[0]['total_pause'];
+            }else{
+                $status = "не работаю";
             }
 
             $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
@@ -79,8 +81,9 @@ class MainController extends Controller
         if (isset($_GET['user'])) {
             if ($_GET['user'] == 'getUserTime') {
                 $check_user = $this->model->checkUserById($_SESSION['user_id']);
-                //debug($check_user);
-                $this->view->message($check_user);
+                $get_hours = $this->model->getHours();
+                // $this->view->message($check_user);
+                $this->view->duomessage($check_user,$get_hours);
             }
 
         }

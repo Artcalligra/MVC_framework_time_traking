@@ -8,7 +8,6 @@ class ApiController extends Controller
 {
     public function timeAction()
     {
-
         $current_time = time();
         $full_date = date("d:m:Y", time());
         $date = str_replace(":", "", $full_date);
