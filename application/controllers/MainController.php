@@ -32,7 +32,7 @@ class MainController extends Controller
 
             $check_user_by_id = $this->model->checkUserByIdLast($_SESSION['user_id']);
             //debug($check_user_by_id[0]['date']);
-            if ($date != $check_user_by_id[0]['date'] && $status = $check_user_by_id[0]['status']!= 'день завершён') {
+            if ($date != $check_user_by_id[0]['date'] && $check_user_by_id[0]['status']!= 'день завершён') {
                 $status = $check_user_by_id[0]['status'];
                 $work_time = $check_user_by_id[0]['total_worked'];
                 $pause_time = $check_user_by_id[0]['total_pause'];

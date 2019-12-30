@@ -98,15 +98,18 @@ window.addEventListener("load",function(event) {
 
    getTime();
 
-   document.getElementById('tableCalendar').onclick = function(event) {
+
+
+});
+
+
+function cellClick(){
+    document.getElementById('tableCalendar').onclick = function(event) {
     idDivClick = event.target.closest('td').querySelector('div').id;
     let divValue = event.target.closest('td').querySelector('div').innerHTML;
     createModal(idDivClick,divValue);
     };
-
-
-
-});
+}
 
 function createModal(id,val){
   if(val){
@@ -130,9 +133,14 @@ function createModal(id,val){
       if(item.date == id){
         let timeStartConvert = convertTime(item.start);
         timeStart.innerHTML = timeStartConvert;
-        //console.log(item.end);
-        let timeEndConvert = convertTime(item.end);
-        timeEnd.innerHTML = timeEndConvert;
+        // console.log(item.end);
+        if(item.end>0){
+          let timeEndConvert = convertTime(item.end);
+          timeEnd.innerHTML = timeEndConvert;
+        }else{
+          timeEndConvert = convertTimeUTC(item.end);
+          timeEnd.innerHTML = timeEndConvert;
+        }        
         let timePauseConvert = convertTimeUTC(item.total_pause);
         timePause.innerHTML = timePauseConvert;
         let timeAllConvert = convertTimeUTC(item.total_worked);
@@ -257,6 +265,7 @@ function getTime(){
           table += '</tr></table>';
 
           elem.innerHTML = table;
+          cellClick();
 }
 
 function getDay(date) { // получить номер дня недели, от 0 (пн) до 6 (вс)

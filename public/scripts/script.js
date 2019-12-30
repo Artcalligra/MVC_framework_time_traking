@@ -93,7 +93,7 @@ function sendStatus(status) {
         success: function (msg) {
             //console.log("Прибыли данные: " + msg);
             person = JSON.parse(msg);
-           // console.log(person);
+            //console.log(person);
             switch (person["status"]) {
                 case 'не работаю':
                     $("#button_start").addClass("active");
@@ -161,7 +161,7 @@ function pauseTime() {
 
 
 
-window.onload = function () {
+window.addEventListener("load",function(event) {
 
     status = $('#headerStatus').html();
 
@@ -176,7 +176,7 @@ window.onload = function () {
                 break;
         }
     }, 1000);
-}
+});
 
 
 /* jQuery(function ($) {
