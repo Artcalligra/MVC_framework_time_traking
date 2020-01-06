@@ -62,7 +62,7 @@
                                     echo 'active';
                                     break;
                                 }
-                                ?>" type="button" value="Start" onclick="get_time()" />
+                                ?>" type="button" value="Начать рабочий день" onclick="get_time()" />
                             <input id="button_pause" class = "disable <?php 
                             switch ($status) {
                                 case "не работаю":
@@ -75,7 +75,7 @@
                                 case "день завершён":
                                     break;
                                 }
-                                ?>" type="button" value="Pause" onclick="pause_time()" />
+                                ?>" type="button" value="Перерыв" onclick="pause_time()" />
                             <input id="button_end_pause" class = "disable <?php 
                             switch ($status) {
                                 case "не работаю":
@@ -88,7 +88,7 @@
                                 case "день завершён":
                                     break;
                                 }
-                                ?>" type="button" value="End pause" onclick="end_pause_time()" />
+                                ?>" type="button" value="Закончить перерыв" onclick="end_pause_time()" />
                             <input id="button_stop" class ="disable <?php 
                             switch ($status) {
                                 case "не работаю":
@@ -102,7 +102,7 @@
                                 case "день завершён":
                                     break;
                                 }
-                                ?>" type="button" value="Stop" onclick="stop_time()" />
+                                ?>" type="button" value="Завершить рабочий день" onclick="stop_time()" />
                                 </div>
                         </div>
                     </div>
@@ -135,7 +135,15 @@
                                     break;
                                 }
                                 ?>">Статистика</a>
-                    <!--  <a href = "#">Сервисы</a> -->
+                        <a href = "/users" class = "disable <?php 
+                                switch ($rang) {
+                                    case "admin":
+                                        echo 'active';
+                                        break;
+                                    case "user":   
+                                        break;
+                                    }
+                                    ?>">Пользователи</a>
                     </div>
                     <div class = "main-content__content col-md-9">
                         <?php echo $content; ?>

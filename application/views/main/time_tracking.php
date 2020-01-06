@@ -4,21 +4,33 @@
   <div class = "main-content__content__tracking__back">
       <a href = "/">Назад</a>
   </div>
-  <h2>Отчет по рабочему времени</h2>
+  <h2>Отчет по рабочему времени <!-- <?php echo $user_name; ?> --></h2>
+    <?php if($_SESSION['rang']=='admin'){?>
+        <div class = "main-content__content__tracking-users">
+          <p>Выбор пользователя:
+          <select id="selectUser"> 
+            <option selected>Не выбрано</option>
+            <?php foreach($all_users as $val): ?>
+              <option value="<?php echo $val['id']; ?>"><?php echo $val['user_name'];?></option>
+              <?php endforeach; ?>
+            </select></p>      
+        </div>
+    <?php } ?>
   <select id="selectYear"> </select>
   <select id="selectMonth"> </select>
   <div id = "calendar"></div>
   <div class = "main-content__content__tracking-worked row">
-    <div class = "col-md-4 main-content__content__tracking-worked__hours"><p>Отработано часов: <b class = "workedHours"></b></p></div>
-    <div class = "col-md-4 main-content__content__tracking-worked__percent"><p>Процент: <b class = "workedPercent"></b></p></div>
-    <div class = "col-md-4 main-content__content__tracking-worked__salary"><p>ЗП: <b class = "workedSalary"></b></p></div>
+    <div class = "col-md-3 main-content__content__tracking-worked__hours"><p>Отработано часов: <b class = "workedHours"></b></p></div>
+    <div class = "col-md-3 main-content__content__tracking-worked__norm"><p>Норма часов: <b class = "normdHours"></b></p></div>
+    <div class = "col-md-3 main-content__content__tracking-worked__percent"><p>Процент: <b class = "workedPercent"></b></p></div>
+    <div class = "col-md-3 main-content__content__tracking-worked__salary"><p>ЗП: <b class = "workedSalary"></b></p></div>
   </div>
 
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal fade" id="dayModal" tabindex="-1" role="dialog" aria-labelledby="dayModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel">Отчёт за день</h4>
+          <h4 class="modal-title" id="dayModalLabel">Отчёт за день</h4>
           <p class="selectedDay"></p>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -40,15 +52,61 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="showEditMpdal">Редактировать</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="editDayModal" tabindex="-1" role="dialog" aria-labelledby="editDayModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="editDayModalLabel">Редактирование дня</h4>
+          <p class="selectedEditDay"></p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class = "form-group row">
+              <label for="start-time" class="col-2 col-form-label">Время начала: </label>
+              <div class="col-4">
+                <input class="form-control" type="time" min="09:00" max="22:00" id="start-time">
+              </div>
+            </div>
+            <div class = "form-group row">
+              <label for="end-time" class="col-2 col-form-label">Время окончания:</label>
+              <div class="col-4">
+                <input class="form-control" type="time" min="09:00" max="22:00" id="end-time">
+              </div>
+            </div>
+            <div class = "form-group row">
+              <label for="pause-time" class="col-2 col-form-label">Перерыв:</label>
+              <div class="col-4">
+                <input class="form-control" type="time" min="00:00" max="03:00" id="pause-time">
+              </div>
+            </div>
+            <button type="submit" id = "saveEditTime" class="btn btn-primary">Сохранить</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
         </div>
       </div>
     </div>
   </div>
 
+
+
 </div>
+<!-- <?php
 
-
+echo $user_salary;
+?> -->
 <script>
 
 var current_date = new Date();
@@ -59,7 +117,8 @@ const monthNames = ["Январь", "Февраль", "Март", "Апрель"
 const getMonth = document.getElementById('selectMonth');
 const getYear = document.getElementById("selectYear");
 const calendar = document.getElementById('calendar');
-var year, month, userTime, idDivClick;
+const selectUser = document.getElementById('selectUser');
+var year, month, userTime, idDivClick, selectedUser,allUsers;
 let selectYear = current_date.getFullYear();
 let dbDate;
 
@@ -81,24 +140,42 @@ window.addEventListener("load",function(event) {
       selectYear+=1;
       document.getElementById('selectYear').appendChild(option);
    }
+   
+   /* allUsers = <?php var_dump($all_users);?>;
+   allUsers.forEach((item)=>{
+     console.log(item);
+   }); */
 
+   /* for (var i = 0; i < $allUsers.length; i++)
+    {
+      let option = document.createElement('option');
+      option.innerHTML = ;
+      selectYear+=1;
+      document.getElementById('selectYear').appendChild(option);
+   } */
+
+/* userDate[3].forEach((item)=>{
+            let option = document.createElement('option');
+            option.innerHTML = item.user_name;
+            option.value = item.id;
+            selectUser.appendChild(option);
+
+        }); */
   month = current_date.getMonth();
   year = current_date.getFullYear();
 
-  inserSelectMonth = document.querySelector('#selectMonth').getElementsByTagName('option');
+  let inserSelectMonth = document.querySelector('#selectMonth').getElementsByTagName('option');
   for (let i = 0; i < inserSelectMonth.length; i++) {
     if (inserSelectMonth[i].value == monthNames[month]) inserSelectMonth[i].selected = true;
   }
 
-  inserSelectYear = document.querySelector('#selectYear').getElementsByTagName('option');
+  let inserSelectYear = document.querySelector('#selectYear').getElementsByTagName('option');
   for (let i = 0; i < inserSelectYear.length; i++) {
     if (inserSelectYear[i].value == year) inserSelectYear[i].selected = true;
   }
    createCalendar(calendar, year, month+1);
 
    getTime();
-
-
 
 });
 
@@ -111,25 +188,28 @@ function cellClick(){
     };
 }
 
+function convertDateWithDots(date){
+  dot='.';
+  let stringDay=date.substring(0, 2) + dot;
+  let stringMonth = date.substring(2, 4) + dot;
+  let stringYear = date.substring(4, 8);
+  let dateDots = stringDay + stringMonth + stringYear;
+  return dateDots;
+}
+
 function createModal(id,val){
   if(val){
     getTime();
-    dot='.';
-    let stringDay=id.substring(0, 2) + dot;
-    let stringMonth = id.substring(2, 4) + dot;
-    let stringYear = id.substring(4, 8);
-    const selectedDay = document.querySelector('.selectedDay').innerHTML = stringDay + stringMonth + stringYear;
+    const selectedDay = document.querySelector('.selectedDay').innerHTML = convertDateWithDots(id);
     const timeStart = document.querySelector('.timeStart');
     const timeEnd = document.querySelector('.timeEnd');
     const timePause = document.querySelector('.timePause');
     const timeAll = document.querySelector('.timeAll');
 
-    
-
-    console.log(selectedDay);
-    console.log(userTime);
+    /* console.log(selectedDay);
+    console.log(userTime); */
     userTime.forEach((item)=>{
-      
+
       if(item.date == id){
         let timeStartConvert = convertTime(item.start);
         timeStart.innerHTML = timeStartConvert;
@@ -140,15 +220,58 @@ function createModal(id,val){
         }else{
           timeEndConvert = convertTimeUTC(item.end);
           timeEnd.innerHTML = timeEndConvert;
-        }        
+        }
         let timePauseConvert = convertTimeUTC(item.total_pause);
         timePause.innerHTML = timePauseConvert;
         let timeAllConvert = convertTimeUTC(item.total_worked);
         timeAll.innerHTML = timeAllConvert;
       }
     });
-    $('#myModal').modal('show');
+    $('#dayModal').modal('show');
   }
+
+  document.getElementById('showEditMpdal').onclick = function(event) {
+    editModal(id);
+    }
+}
+
+document.getElementById('saveEditTime').addEventListener("click", function(event ) {
+  let startTime = document.querySelector('#start-time').value;
+  let endTime = document.querySelector('#end-time').value;
+  let pauseTime = document.querySelector('#pause-time').value;
+  let selectedEditDay = document.querySelector('.selectedEditDay').innerHTML;
+  let stringDay=selectedEditDay.substring(0, 2);
+  let stringMonth = selectedEditDay.substring(3, 5);
+  let stringYear = selectedEditDay.substring(6, 10);
+  let daty = new Date(stringYear, stringMonth-1, stringDay);
+  let dateWothoutDots=selectedEditDay.replace(/\./g, "");
+
+    $.ajax({
+          type: "POST",
+          url: "time_tracking",
+          data: {
+          'user': 'editTime',
+          'date' : dateWothoutDots,
+          'editStart': startTime,
+          'editEnd': endTime,
+          'editPause': pauseTime,
+          },
+          success: function (msg) {
+          // console.log(msg);
+          }
+        });
+        // $('#editDayModal').modal('show');
+        // event.preventDefault();
+
+    });
+
+
+function editModal(id){
+  const selectedEditDay = document.querySelector('.selectedEditDay');
+  selectedEditDay.innerHTML = convertDateWithDots(id);
+  //console.log(id);
+  $('#dayModal').modal('hide');
+  $('#editDayModal').modal('show');
 }
 
 function convertTime(checkDate){
@@ -167,39 +290,68 @@ function convertTimeUTC(checkDate){
   return time;
 }
 
-  /* function checkTime(i) {
+  function checkTime(i) {
     if (i < 10) {
         i = "0" + i;
     }
     return i;
-  } */
+  }
 
 function getTime(){
-
   // $('.workedHours').empty();
   /* $('.workedHours').html('0');*/
-  let countWorkedHours = 0; 
-
+  let countWorkedHours = 0;
+  let dateShow = checkTime(month+1)+ String(year);
+  //console.log(dateShow);
+  let normdHours = 0, percent = 0, wageWithTax, rate, wageWithoutTax = 0;
+  let dbSalary = <?php echo $user_salary ?>;
+  // console.log(dbSalary);
   $.ajax({
         type: "GET",
         url: "time_tracking",
-        data: 'user=getUserTime',
+        data: {
+          'user': 'getUserTime',
+          'selectedUser' : selectedUser,
+          },
         success: function (msg) {
         userDate = JSON.parse(msg);
         userTime = userDate[1];
          userTime.forEach((item)=>{
           $('#'+item.date).html((item.total_worked/3600).toFixed(2)>=0?(item.total_worked/3600).toFixed(2):($().css('color','green')));
-          countWorkedHours += parseInt(item.total_worked/3600); 
-          dbDate = item.date;       
+          //countWorkedHours += parseInt(item.total_worked/3600);
+          dbDate = item.date;
+
+          //console.log('db ' + dbDate.substring(2, 8));
+           if(dbDate.substring(2, 8) == dateShow){
+            countWorkedHours += parseInt(item.total_worked);
+
+           }/* else{
+            countWorkedHours=0;
+           } */
+
           });
-        $('.workedHours').html(countWorkedHours);
+          countWorkedHoursConvert = (countWorkedHours/3600).toFixed(2);
+           // console.log(countWorkedHoursConvert);
+        $('.workedHours').html(countWorkedHoursConvert);
+    //console.log(checkTime(month+1), year );
 
         userDate[2].forEach((item)=>{
-          if (item.date = dbDate.substring(2, 8)){
-            console.log(item.date );
+          if (item.date == dateShow){
+            normdHours = item.hours;
+            percent= (countWorkedHoursConvert*100)/normdHours;
+            rate = dbSalary/normdHours;
+            wageWithTax = (rate.toFixed(2))*countWorkedHoursConvert;
+            // console.log(wageWithTax.toFixed(2));
+            if (wageWithTax>665){
+              wageWithoutTax = wageWithTax.toFixed(2) -((wageWithTax*0.01)+(wageWithTax*0.13));
+            }else{
+              wageWithoutTax = wageWithTax.toFixed(2) -(((wageWithTax-110)*0.13)+(wageWithTax*0.01));
+            }
           }
-           
-                  
+          $('.normdHours').html(normdHours);
+          $('.workedPercent').html(percent.toFixed(2));
+          $('.workedSalary').html(wageWithoutTax);
+
         });
 
         }
@@ -223,6 +375,12 @@ function getTime(){
     createCalendar(calendar, year, month+1);
     getTime();
 
+  });
+
+  document.getElementById('selectUser').addEventListener('change', function() {
+    selectedUser = selectUser.value;
+    createCalendar(calendar, year, month+1);
+    getTime();
   });
 
     function createCalendar(elem, year, month) {

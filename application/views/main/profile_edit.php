@@ -5,7 +5,7 @@
         <a href = "/profile?id=<?php echo $_SESSION['user_id']; ?>">Назад</a>
     </div>
     <div class = "main-content__content__profile-edit-item">
-        
+
             <p><?php if (isset($message)) {
     echo ($message);}?></p>
         <div class = "main-content__content__profile-img"><img src="<?php echo $user['image'] ?>" alt="user img"></div>
@@ -24,7 +24,7 @@
                 <legend>Смена пароля</legend>
                     <p>Старый пароль: <input type="password" name="old_password"></p>
                     <p>Новый пароля: <input type="password" name="new_password"></p>
-                    <p>Подтверждение пароля: <input type="password" name="confirm_password"></p>                 
+                    <p>Подтверждение пароля: <input type="password" name="confirm_password"></p>
             </fieldset>
 
                 <div class = "main-content__content__profile-edit__button">

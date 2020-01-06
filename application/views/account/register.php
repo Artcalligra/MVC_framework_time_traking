@@ -8,10 +8,10 @@
     <p><input type="password" name = "password" class = "item-size" required></p>
     <p>Подтверждение пароля</p>
     <p><input type="password" name = "password_confirm" class = "item-size" required></p>
-    <button type = "submit" class = "item-size">Sign up</button>
+    <button type = "submit" class = "item-size">Зарегистрироваться</button>
 </form>
 <div class = "block-form__sign">
-    <span>Already have an account? <a href = "/account/login">Sign in</a></span>
+    <span>У вас есть аккаунт? <a href = "/account/login">Войти</a></span>
 </div>
 
 

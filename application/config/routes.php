@@ -11,6 +11,11 @@ return [
         'action' => 'time_tracking',
     ],
 
+    'users' => [
+        'controller' => 'main',
+        'action' => 'users',
+    ],
+
     'statistic' => [
         'controller' => 'main',
         'action' => 'statistic',

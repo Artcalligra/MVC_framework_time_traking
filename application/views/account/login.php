@@ -5,10 +5,10 @@
     <p><input type="text" name = "user_name" class = "item-size" required></p>
     <p>Пароль</p>
     <p><input type="password" name = "password" class = "item-size" required></p>
-    <button type = "submit" class = "item-size" >Sign in</button>
+    <button type = "submit" class = "item-size" >Войти</button>
 </form>
 <div class = "block-form__sign">
-    <span>Create an account? <a href = "/account/register">Sign up</a></span>
+    <span>Создать аккаунт? <a href = "/account/register">Создать</a></span>
 </div>
 <p><?php if (isset($message)) {
     echo ($message);}?></p>

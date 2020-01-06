@@ -10,7 +10,21 @@
             <p><?php if (isset($message)) {
     echo ($message);}?></p>
         <div class = "main-content__content__profile-img"><img src="<?php echo $user['image'] ?>" alt="user img"></div>
-        <form enctype="multipart/form-data" action = "/profile?id=<?php echo $_SESSION['user_id']; ?>" method = "POST">
+        <form enctype="multipart/form-data" action = "/profile?id=<?php echo $_GET['id']; ?>" method = "POST">
+        <?php if ($_SESSION['rang'] == 'admin') {?>
+                <div class = "row">
+                    <div class = "main-content__content__profile-item__salary">
+                        <p>Оклад: <input type="text" name="salary" value="<?php echo $user['salary']; ?>"></p>
+                    </div>
+                    <div class = "main-content__content__profile-item__id disable">
+                        <input type="text"  id= "userId">
+                    </div>
+                
+                    <div class = "main-content__content__profile-item__change">
+                        <button type = "submit" >Изменить</button>
+                    </div>
+                </div>
+            <?php }?>
             <fieldset>
                 <legend>Контактная информация</legend>
                     <!-- <p>E-mail: <input type="email" ></p>
@@ -23,33 +37,25 @@
                     </div>
             </fieldset>
 
-
-
-            <!-- <div class = "main-content__content__profile__title">
-                    <h3>Заголовок</h3>
-                    <input type="text" name = "title" class = "item-size" value = "<?php echo $news['title']; ?>" required>
-                </div>
-                <div class = "main-content__content__profile__description">
-                    <h3>Описание</h3>
-                    <textarea rows="10" name = "description" class = "item-size"><?php echo $news['description']; ?></textarea>
-                </div>
-                <div class = "main-content__content__profile__image">
-                    <h3>Изображение</h3>
-                    <input type="file" name="image" accept=".jpg, .jpeg, .png">
-                </div> -->
-                <!-- <div class = "main-content__content__profile__button">
-                    <button type = "submit" class = "" >Сохранить</button>
-                </div> -->
         </form>
 
-        <?php if($user['id']==$_SESSION['user_id'] || $_SESSION['rang']=='admin'){?>
-            <div class = "main-content__content__profile-item__edi">
+        <?php if ($user['id'] == $_SESSION['user_id']/*  || $_SESSION['rang'] == 'admin' */) {?>
+            <div class = "main-content__content__profile-item__edit">
                 <a href = "/profile_edit?id=<?php echo $user['id']; ?>">Редактировать</a>
             </div>
-        <?php } ?>
+        <?php }?>
+
+
 
         <!-- <div class = "main-content__content__profile-item__edit">
             <a href = "/profile_edit?id=<?php echo $user['id']; ?>">Редактировать</a>
         </div> -->
     </div>
 </div>
+
+<script>
+var strGET = window.location.search.replace( '?', '').split('='); 
+document.querySelector("#userId").value = strGET[1];
+document.querySelector("#userId").name = strGET[0];
+//console.log(strGET);
+</script>

@@ -54,6 +54,11 @@ class Main extends Model
         $date = $this->db->row('SELECT * FROM month_hours');
         return $date;
     }
+    public function getAllUsers()
+    {
+        $date = $this->db->row('SELECT * FROM users');
+        return $date;
+    }
 
     public function checkUserByIdLast($user_id)
     {
@@ -142,7 +147,7 @@ class Main extends Model
         $db = new Db;
         //debug($image);
         if (!empty($image)) {
-            echo '+';
+            // echo '+';
             $params = [
                 'id' => $id,
                 'user_name' => $user_name,
@@ -154,7 +159,7 @@ class Main extends Model
 
             $date = $db->query('UPDATE users SET user_name = :user_name, image = :image, email = :email, phone = :phone, password = :password WHERE id = :id', $params);
         } else {
-            echo '-';
+            // echo '-';
             $params = [
                 'id' => $id,
                 'user_name' => $user_name,
@@ -169,6 +174,37 @@ class Main extends Model
 
         return $date;
 
+    }
+
+    public function editTime($user_id, $date, $start_time, $pause, $end_time)
+    {
+        $total_worked = $end_time - $start_time - $pause;
+        $db = new Db;
+        $params = [
+            'user_id' => $user_id,
+            'date' => $date,
+            'start' => $start_time,
+            'total_pause' => $pause,
+            'end' => $end_time,
+            'total_worked' => $total_worked,
+
+        ];
+
+        $date = $this->db->row('UPDATE times SET start = :start, total_pause = :total_pause, end = :end, total_worked = :total_worked  WHERE user_id = :user_id AND date = :date', $params);
+        return $date;
+    }
+
+    public function updateUserSalary($user_id, $salary)
+    {
+        $db = new Db;
+        $params = [
+            'user_id' => $user_id,
+            'salary' => $salary,
+
+        ];
+
+        $date = $this->db->row('UPDATE users SET salary = :salary WHERE id = :user_id', $params);
+        return $date;
     }
 
 }

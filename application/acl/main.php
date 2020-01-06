@@ -10,6 +10,7 @@ return [
         'news',
         'news_edit',
         'profile_edit',
+        'users',
     ],
     'authorize' => [
         
