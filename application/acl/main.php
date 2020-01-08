@@ -11,6 +11,7 @@ return [
         'news_edit',
         'profile_edit',
         'users',
+        'month_hours',
     ],
     'authorize' => [
         

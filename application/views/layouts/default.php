@@ -144,6 +144,15 @@
                                         break;
                                     }
                                     ?>">Пользователи</a>
+                        <a href = "/month_hours" class = "disable <?php 
+                                switch ($rang) {
+                                    case "admin":
+                                        echo 'active';
+                                        break;
+                                    case "user":   
+                                        break;
+                                    }
+                                    ?>">Нормы часов</a>
                     </div>
                     <div class = "main-content__content col-md-9">
                         <?php echo $content; ?>

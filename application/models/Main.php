@@ -207,4 +207,46 @@ class Main extends Model
         return $date;
     }
 
+    public function monthHours()
+    {
+
+        $date = $this->db->row('SELECT * FROM month_hours');
+        return $date;
+    }
+
+    public function checkDate($date)
+    {
+        $db = new Db;
+        $params = [
+            'date' => $date,
+        ];
+
+        $date = $this->db->row('SELECT * FROM month_hours WHERE date = :date', $params);
+        return $date;
+    }
+
+    public function addMonthHours($date, $hours)
+    {
+        $db = new Db;
+        $params = [
+            'date' => $date,
+            'hours' => $hours,
+        ];
+
+        $date = $this->db->row('INSERT INTO month_hours SET date = :date, hours = :hours', $params);
+        return $date;
+    }
+
+    public function editNorm($date, $hours)
+    {
+        $db = new Db;
+        $params = [
+            'date' => $date,
+            'hours' => $hours,
+        ];
+
+        $date = $this->db->row('UPDATE month_hours SET hours = :hours WHERE date = :date', $params);
+        return $date;
+    }
+
 }

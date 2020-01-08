@@ -82,7 +82,7 @@ class MainController extends Controller
             if ($_GET['user'] == 'getUserTime') {
                 if (!empty($_GET['selectedUser'])) {
                     $user_id = $_GET['selectedUser'];
-                }else{
+                } else {
                     $user_id = $_SESSION['user_id'];
                 }
                 $check_user = $this->model->checkUserById($user_id);
@@ -106,33 +106,26 @@ class MainController extends Controller
                 if (!empty($_POST['editStart'])) {
                     $edit_hours = substr($_POST['editStart'], 0, 2);
                     $edit_minutes = ($edit_hours * 60) + substr($_POST['editStart'], 3, 2);
-                    // debug($edit_minutes);
                     $start_time = $dateday + ($edit_minutes * 60);
-                    //debug($start_time);
                 }
                 if (!empty($_POST['editEnd'])) {
                     $edit_hours = substr($_POST['editEnd'], 0, 2);
                     $edit_minutes = ($edit_hours * 60) + substr($_POST['editEnd'], 3, 2);
-                    // debug($edit_minutes);
                     $end_time = $dateday + ($edit_minutes * 60);
-                    //debug($end_time);
                 }
                 if (!empty($_POST['editPause'])) {
                     $edit_hours = substr($_POST['editPause'], 0, 2);
                     $pause_time = (($edit_hours * 60) + substr($_POST['editPause'], 3, 2)) * 60;
-                    // debug($edit_minutes);
-                    //debug($_POST['editPause']);
                 }
                 $edit_time = $this->model->editTime($_SESSION['user_id'], $date, $start_time, $pause_time, $end_time);
                 //debug($start_time. " ". $end_time. " ".$pause_time);
             }
-
         }
 
         $default_value = $this->default_date();
         $result_user = $this->model->getUserId($_SESSION['user_id']);
         $get_all_users = $this->model->getAllUsers();
-        $default_value += $default_value += [
+        $default_value += [
             'user_salary' => $result_user[0]['salary'],
             'all_users' => $get_all_users,
         ];
@@ -147,12 +140,58 @@ class MainController extends Controller
 
     public function usersAction()
     {
+        if ($_SESSION['rang'] == 'admin') {
+            $default_value = $this->default_date();
+            $get_all_users = $this->model->getAllUsers();
+            $default_value += $default_value += [
+                'all_users' => $get_all_users,
+            ];
+            $this->view->render('страница пользователей', $default_value);
+        } else {
+            View::errorCode(404);
+        }
+
+    }
+
+    public function month_hoursAction()
+    {
         $default_value = $this->default_date();
-        $get_all_users = $this->model->getAllUsers();
-        $default_value += $default_value += [
-            'all_users' => $get_all_users,
-        ];
-        $this->view->render('страница пользователей', $default_value);
+        if ($_SESSION['rang'] == 'admin') {
+            if (!empty($_POST)) {
+                if ((int)$_POST['month'] < 10){
+                   $month = "0".$_POST['month'];
+                    // debug($month.$_POST['year']);
+                    $check_date = $this->model->checkDate($month.$_POST['year']);
+                    if($check_date){
+                        $default_value += $default_value += [
+                            'message' => 'На введённую дату уже есть данные',
+                        ];
+                    }else{
+                        $add_month_hours = $this->model->addMonthHours($month.$_POST['year'],$_POST['norm']);
+                        // if($add_month_hours){
+                            $this->view->redirect('/month_hours');
+                        // }
+                    }
+                }               
+
+            }
+
+            if(!empty($_GET['norm'])){
+                if(!empty($_GET['newNorm'])){
+                    $edit_norm = $this->model->editNorm($_GET['date'],$_GET['newNorm']);
+                }
+               
+            }
+          
+            $get_month_hours = $this->model->monthHours();
+            $default_value += $default_value += [
+                'month_hours' => $get_month_hours,
+            ];
+            $this->view->render('страница норм часов', $default_value);
+        } else {
+            View::errorCode(404);
+        }
+
     }
 
     public function profileAction()
@@ -177,9 +216,7 @@ class MainController extends Controller
 
         if (isset($_POST['salary'])) {
             $update_user = $this->model->updateUserSalary($_POST['id'], $_POST['salary']);
-           // if ($update_user) {
-                $this->view->redirect('/profile?id=' . $_POST['id']);
-            //}
+            $this->view->redirect('/profile?id=' . $_POST['id']);
         }
 
         $this->view->render('страница профиля', $default_value);

@@ -15,8 +15,4 @@
         </div>
     <?php endforeach; ?>
 
-   <!--  <iframe src="/profile?id=<?php echo $val['id']; ?>" name="bannerFrame" width="468" height="60" align="left">
-    Ваш браузер не поддерживает встроенные фреймы!
-    </iframe> -->
-
 </div>

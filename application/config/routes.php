@@ -16,6 +16,11 @@ return [
         'action' => 'users',
     ],
 
+    'month_hours' => [
+        'controller' => 'main',
+        'action' => 'month_hours',
+    ],
+
     'statistic' => [
         'controller' => 'main',
         'action' => 'statistic',

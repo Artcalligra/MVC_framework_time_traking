@@ -173,6 +173,14 @@ window.addEventListener("load",function(event) {
   for (let i = 0; i < inserSelectYear.length; i++) {
     if (inserSelectYear[i].value == year) inserSelectYear[i].selected = true;
   }
+  if ($("#selectUser").length){
+    let inserSelectUser = selectUser.getElementsByTagName('option');
+      for (let i = 0; i < inserSelectUser.length; i++) {
+        if (inserSelectUser[i].value == 1) inserSelectUser[i].selected = true;
+      }
+  }
+
+
    createCalendar(calendar, year, month+1);
 
    getTime();
@@ -383,12 +391,8 @@ function getTime(){
   });
 
   if ($("#selectUser").length){
-    document.getElementById('selectUser').addEventListener('change', function() {
+    selectUser.addEventListener('change', function() {
 
-    let inserSelectUser = document.querySelector('#selectUser').getElementsByTagName('option');
-    for (let i = 0; i < inserSelectUser.length; i++) {
-      if (inserSelectUser[i].value == 1) inserSelectUser[i].selected = true;
-    }
       selectedUser = selectUser.value;
       createCalendar(calendar, year, month+1);
       getTime();
