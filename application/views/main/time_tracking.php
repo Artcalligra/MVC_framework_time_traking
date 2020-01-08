@@ -9,7 +9,7 @@
         <div class = "main-content__content__tracking-users">
           <p>Выбор пользователя:
           <select id="selectUser"> 
-            <option selected>Не выбрано</option>
+            <!-- <option selected>Не выбрано</option> -->
             <?php foreach($all_users as $val): ?>
               <option value="<?php echo $val['id']; ?>"><?php echo $val['user_name'];?></option>
               <?php endforeach; ?>
@@ -340,13 +340,18 @@ function getTime(){
             normdHours = item.hours;
             percent= (countWorkedHoursConvert*100)/normdHours;
             rate = dbSalary/normdHours;
-            wageWithTax = (rate.toFixed(2))*countWorkedHoursConvert;
+            if(countWorkedHoursConvert<=0){
+              wageWithoutTax =0;
+            }else{
+              wageWithTax = (rate.toFixed(2))*countWorkedHoursConvert;
             // console.log(wageWithTax.toFixed(2));
             if (wageWithTax>665){
               wageWithoutTax = wageWithTax.toFixed(2) -((wageWithTax*0.01)+(wageWithTax*0.13));
             }else{
               wageWithoutTax = wageWithTax.toFixed(2) -(((wageWithTax-110)*0.13)+(wageWithTax*0.01));
             }
+            }
+            
           }
           $('.normdHours').html(normdHours);
           $('.workedPercent').html(percent.toFixed(2));
@@ -377,12 +382,18 @@ function getTime(){
 
   });
 
-  document.getElementById('selectUser').addEventListener('change', function() {
-    selectedUser = selectUser.value;
-    createCalendar(calendar, year, month+1);
-    getTime();
-  });
+  if ($("#selectUser").length){
+    document.getElementById('selectUser').addEventListener('change', function() {
 
+    let inserSelectUser = document.querySelector('#selectUser').getElementsByTagName('option');
+    for (let i = 0; i < inserSelectUser.length; i++) {
+      if (inserSelectUser[i].value == 1) inserSelectUser[i].selected = true;
+    }
+      selectedUser = selectUser.value;
+      createCalendar(calendar, year, month+1);
+      getTime();
+    });
+  }
     function createCalendar(elem, year, month) {
 
       let mon = month - 1; // месяцы в JS идут от 0 до 11, а не от 1 до 12

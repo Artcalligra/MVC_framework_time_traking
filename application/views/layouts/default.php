@@ -110,7 +110,7 @@
                         <!-- <div class = "header-items__user-img"></div> -->
                         <div class = "row header-items__user dropdown open">
                             <div class= "header-items__user-img"><img src="<?php echo $user_img ?>" alt="user img"></div>
-                            <div class ="header-items__user-name dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><p><?php echo $user_name; ?></p></div><!-- id = "openPopupSettings" -->
+                            <div class ="header-items__user-name dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><?php echo $user_name; ?></div>
                             <div class = "header-items__user-popup dropdown-menu" id = "itemPopupSettings"><a href = "/profile?id=<?php echo $_SESSION['user_id']; ?>" class="dropdown-item">Моя страница</a><br><a href = "/account/login" class="dropdown-item">Выход</a> </div>
                         </div>
                         

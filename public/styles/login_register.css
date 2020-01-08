@@ -45,12 +45,12 @@ body {
 
 .block-form button {
     margin: 10px 0;
-    font-size: 1.4em;
-}
-
-.block-form span {
     font-size: 0.8em;
 }
+
+/* .block-form span {
+    font-size: 0.8em;
+} */
 
 .item-size {
     width: 100%;

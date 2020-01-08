@@ -44,6 +44,10 @@ header {
     white-space: nowrap;
 }
 
+.header-items__show:after {
+    margin-top: 1em;
+}
+
 .header-items__time-popup__pause-time {
     display: none;
 }
