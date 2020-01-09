@@ -126,7 +126,7 @@
                     <div class = "main-content__navigation col-md-3">
                         <a href = "/">Новости</a>
                         <a href = "/time_tracking">Учёт рабочего времени</a>
-                        <a href = "/statistic" class = "disable <?php 
+                        <!-- <a href = "/statistic" class = "disable <?php 
                             switch ($rang) {
                                 case "admin":
                                     echo 'active';
@@ -134,7 +134,7 @@
                                 case "user":   
                                     break;
                                 }
-                                ?>">Статистика</a>
+                                ?>">Статистика</a> -->
                         <a href = "/users" class = "disable <?php 
                                 switch ($rang) {
                                     case "admin":

@@ -14,7 +14,7 @@
         <?php if ($_SESSION['rang'] == 'admin') {?>
                 <div class = "row">
                     <div class = "main-content__content__profile-item__salary">
-                        <p>Оклад: <input type="text" name="salary" value="<?php echo $user['salary']; ?>"></p>
+                        <p>Оклад: <input type="number" name="salary" value="<?php echo $user['salary']; ?>"></p>
                     </div>
                     <div class = "main-content__content__profile-item__id disable">
                         <input type="text"  id= "userId">

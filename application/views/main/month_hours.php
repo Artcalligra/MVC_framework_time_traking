@@ -13,7 +13,7 @@
     <form action = "/month_hours" method = "POST">
         <div class = "show_norm">
             <?php foreach ($month_hours as $val): ?>
-                <div class = "row">
+                <div class = "row line-norm" onclick="clickNorm(this);">
                     <div class="col-4 col-md-3">
                         <p class ="year"><?php echo (substr($val['date'], 2, 4)); ?></p>
                     </div>
@@ -21,7 +21,8 @@
                         <p><?php echo (substr($val['date'], 0, 2)); ?></p>
                     </div>
                     <div class="col-4 col-md-3">
-                        <input type="number" class = "editNorm" data-id= "<?php echo ($val['date']); ?>" name="edit_norm" min="150" max="190"  value="<?php echo ($val['hours']); ?>" onclick="clickNorm(this);" required>
+                        <!-- <input type="number" class = "editNorm" data-id= "<?php echo ($val['date']); ?>" name="edit_norm" min="150" max="190"  value="<?php echo ($val['hours']); ?>" onclick="clickNorm(this);" required> -->
+                        <p class = "editNorm" data-id= "<?php echo ($val['date']); ?>" name="edit_norm"><?php echo ($val['hours']); ?></p>
                     </div>
                     <!-- <div class="col-10 col-md-3 text-center">
                     <button type = "submit" class="btn btn-primary disable edit_norm">Изменить</button>
@@ -106,7 +107,7 @@
     border: hidden;
 }
 
-.show_norm input:hover {
+.line-norm:hover {
     border: 2px inset #515afd;
 }
 .selectedEditMonth{
@@ -121,11 +122,12 @@
 <script>
 
 function clickNorm(rrr) {
-    $('#editNormModal').modal('show');
-    //  console.log($('.editNorm').data('id'));
+     $('#editNormModal').modal('show');
+    // console.log(rrr.querySelector(".editNorm").getAttribute("data-id"));
+    //   console.log($('.editNorm').data('id'));
     // console.log(rrr.getAttribute("data-id"));
     let selectedEditMonth = document.querySelector('.selectedEditMonth');
-    let date = rrr.getAttribute("data-id");
+    let date = rrr.querySelector(".editNorm").getAttribute("data-id");
     let convertDate = date.substring(0, 2) + '.' + date.substring(2, 6);
     selectedEditMonth.innerHTML = convertDate;
 }

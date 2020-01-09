@@ -37,6 +37,7 @@ header {
 
 .header-items__show {
     display: flex;
+    margin-top: 7px;
 }
 
 .header-items__show div {
@@ -96,7 +97,14 @@ header {
     flex-wrap: wrap;
     font-size: 0.8em;
 }
-
+.main-content__navigation a{
+    padding: 10px 0;
+    font-size: 1.1em;
+}
+.main-content__content__news-title__button{
+    margin: 10px 0;
+    font-size: 1.1em;
+}
 /* .main-content__content {
     width: 80%;
 } */

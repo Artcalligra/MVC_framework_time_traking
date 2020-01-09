@@ -123,11 +123,9 @@ class Main extends Model
                     'description' => $description,
                 ];
             }
-            echo '+';
 
             $date = $db->query('UPDATE news SET title = :title, image = :image, description = :description WHERE id = :id', $params);
         } else {
-            echo '-';
             $params = [
                 'id' => $id,
                 'title' => $title,

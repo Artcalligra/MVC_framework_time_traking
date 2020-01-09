@@ -70,7 +70,7 @@ class MainController extends Controller
     {
         $result = $this->model->getNews();
         $default_value = $this->default_date();
-        $default_value = $default_value += [
+        $default_value += [
             'news' => $result,
         ];
         $this->view->render('главная страница', $default_value);
@@ -143,7 +143,7 @@ class MainController extends Controller
         if ($_SESSION['rang'] == 'admin') {
             $default_value = $this->default_date();
             $get_all_users = $this->model->getAllUsers();
-            $default_value += $default_value += [
+            $default_value += [
                 'all_users' => $get_all_users,
             ];
             $this->view->render('страница пользователей', $default_value);
@@ -163,7 +163,7 @@ class MainController extends Controller
                     // debug($month.$_POST['year']);
                     $check_date = $this->model->checkDate($month.$_POST['year']);
                     if($check_date){
-                        $default_value += $default_value += [
+                        $default_value += [
                             'message' => 'На введённую дату уже есть данные',
                         ];
                     }else{
@@ -184,7 +184,7 @@ class MainController extends Controller
             }
           
             $get_month_hours = $this->model->monthHours();
-            $default_value += $default_value += [
+            $default_value += [
                 'month_hours' => $get_month_hours,
             ];
             $this->view->render('страница норм часов', $default_value);
@@ -201,7 +201,7 @@ class MainController extends Controller
             if (ctype_digit($_GET['id'])) {
                 $result_user = $this->model->getUserId($_GET['id']);
                 if ($result_user) {
-                    $default_value = $default_value += [
+                    $default_value += [
                         'user' => $result_user[0],
                     ];
                 } else {
@@ -216,7 +216,7 @@ class MainController extends Controller
 
         if (isset($_POST['salary'])) {
             $update_user = $this->model->updateUserSalary($_POST['id'], $_POST['salary']);
-            $this->view->redirect('/profile?id=' . $_POST['id']);
+            $this->view->redirect('/profile?id=' . $_POST['id']); 
         }
 
         $this->view->render('страница профиля', $default_value);
@@ -234,7 +234,7 @@ class MainController extends Controller
                     $password = $result_user[0]['password'];
                     if ($result_user) {
                         //debug($result_user);
-                        $default_value = $default_value += [
+                        $default_value += [
                             'user' => $result_user[0],
                         ];
                     } else {
@@ -342,7 +342,7 @@ class MainController extends Controller
             if (ctype_digit($_GET['id'])) {
                 $result = $this->model->getNewsById($_GET['id']);
                 if ($result) {
-                    $default_value = $default_value += [
+                    $default_value += [
                         'news' => $result,
                     ];
                 } else {
@@ -367,7 +367,7 @@ class MainController extends Controller
                 $result = $this->model->getNewsById($_GET['id']);
                 //debug($result);
                 if ($result) {
-                    $default_value = $default_value += [
+                    $default_value  += [
                         'news' => $result[0],
                     ];
                 } else {

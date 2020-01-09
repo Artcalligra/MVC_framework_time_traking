@@ -363,7 +363,7 @@ function getTime(){
           }
           $('.normdHours').html(normdHours);
           $('.workedPercent').html(percent.toFixed(2));
-          $('.workedSalary').html(wageWithoutTax);
+          $('.workedSalary').html(wageWithoutTax.toFixed(2));
 
         });
 
