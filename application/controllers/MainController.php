@@ -14,7 +14,7 @@ class MainController extends Controller
     {
         if (isset($_SESSION['user_id'])) {
             $userTime = null;
-
+            date_default_timezone_set("Europe/Minsk");
             $current_time = date("H:i:s", time());
             $full_date = date("d:m:Y", time());
             $date = str_replace(":", "", $full_date);
