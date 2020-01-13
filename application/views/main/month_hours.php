@@ -24,9 +24,7 @@
                         <!-- <input type="number" class = "editNorm" data-id= "<?php echo ($val['date']); ?>" name="edit_norm" min="150" max="190"  value="<?php echo ($val['hours']); ?>" onclick="clickNorm(this);" required> -->
                         <p class = "editNorm" data-id= "<?php echo ($val['date']); ?>" name="edit_norm"><?php echo ($val['hours']); ?></p>
                     </div>
-                    <!-- <div class="col-10 col-md-3 text-center">
-                    <button type = "submit" class="btn btn-primary disable edit_norm">Изменить</button>
-                </div> -->
+
                 </div>
             <?php endforeach;?>
         </div>
@@ -45,17 +43,6 @@
                 </div>
             </div>
     </form>
-    <!-- <table>
-        <tr>
-            <th>Год</th>
-            <th>Месяц</th>
-            <th>Норма</th>
-        </tr>
-            <?php foreach ($month_hours as $val): ?>
-                <tr><td><?php echo (substr($val['date'], 2, 4)); ?></td><td><?php echo (substr($val['date'], 0, 2)); ?></td><td><?php echo ($val['hours']); ?></td></tr>
-            <?php endforeach;?>
-    </table> -->
-
 
     <div class="modal fade" id="editNormModal" tabindex="-1" role="dialog" aria-labelledby="editNormModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -108,7 +95,7 @@
 }
 
 .line-norm:hover {
-    border: 2px inset #515afd;
+    border: 2px inset #75b6b6;
 }
 .selectedEditMonth{
     margin-bottom: 0;

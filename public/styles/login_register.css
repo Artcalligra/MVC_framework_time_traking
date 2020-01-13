@@ -59,7 +59,7 @@ body {
     padding: 12px 15px;
 }
 
-.block-form__sign {
+.block-form__sign, .block-form__recovery-pass {
     text-align: center;
     margin-top: 5px;
 }

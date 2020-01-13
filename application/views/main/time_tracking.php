@@ -5,17 +5,17 @@
       <a href = "/">Назад</a>
   </div>
   <h2>Отчет по рабочему времени <!-- <?php echo $user_name; ?> --></h2>
-    <?php if($_SESSION['rang']=='admin'){?>
+    <?php if ($_SESSION['rang'] == 'admin') {?>
         <div class = "main-content__content__tracking-users">
           <p>Выбор пользователя:
-          <select id="selectUser"> 
+          <select id="selectUser">
             <!-- <option selected>Не выбрано</option> -->
-            <?php foreach($all_users as $val): ?>
-              <option value="<?php echo $val['id']; ?>"><?php echo $val['user_name'];?></option>
-              <?php endforeach; ?>
-            </select></p>      
+            <?php foreach ($all_users as $val): ?>
+              <option value="<?php echo $val['id']; ?>"><?php echo $val['user_name']; ?></option>
+              <?php endforeach;?>
+            </select></p>
         </div>
-    <?php } ?>
+    <?php }?>
   <select id="selectYear"> </select>
   <select id="selectMonth"> </select>
   <div id = "calendar"></div>
@@ -49,28 +49,8 @@
             <div class = "col-md-6 modal-body__time-all"> Всего отработано: <p class="timeAll"></p>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="showEditMpdal">Редактировать</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
-
-  <div class="modal fade" id="editDayModal" tabindex="-1" role="dialog" aria-labelledby="editDayModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="editDayModalLabel">Редактирование дня</h4>
-          <p class="selectedEditDay"></p>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
+          <form class = "disable" id = "editForm">
             <div class = "form-group row">
               <label for="start-time" class="col-2 col-form-label">Время начала: </label>
               <div class="col-4">
@@ -80,7 +60,7 @@
             <div class = "form-group row">
               <label for="end-time" class="col-2 col-form-label">Время окончания:</label>
               <div class="col-4">
-                <input class="form-control" type="time" min="09:00" max="22:00" id="end-time">
+                <input class="form-control" type="time" min="09:00" max="23:00" id="end-time">
               </div>
             </div>
             <div class = "form-group row">
@@ -91,10 +71,11 @@
             </div>
             <button type="submit" id = "saveEditTime" class="btn btn-primary">Сохранить</button>
           </form>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          <button type="button" class="btn btn-primary" id="showEditModal">Редактировать</button>
         </div>
       </div>
     </div>
@@ -102,11 +83,8 @@
 
 
 
-</div>
-<!-- <?php
 
-echo $user_salary;
-?> -->
+</div>
 <script>
 
 var current_date = new Date();
@@ -140,27 +118,7 @@ window.addEventListener("load",function(event) {
       selectYear+=1;
       document.getElementById('selectYear').appendChild(option);
    }
-   
-   /* allUsers = <?php var_dump($all_users);?>;
-   allUsers.forEach((item)=>{
-     console.log(item);
-   }); */
 
-   /* for (var i = 0; i < $allUsers.length; i++)
-    {
-      let option = document.createElement('option');
-      option.innerHTML = ;
-      selectYear+=1;
-      document.getElementById('selectYear').appendChild(option);
-   } */
-
-/* userDate[3].forEach((item)=>{
-            let option = document.createElement('option');
-            option.innerHTML = item.user_name;
-            option.value = item.id;
-            selectUser.appendChild(option);
-
-        }); */
   month = current_date.getMonth();
   year = current_date.getFullYear();
 
@@ -238,8 +196,9 @@ function createModal(id,val){
     $('#dayModal').modal('show');
   }
 
-  document.getElementById('showEditMpdal').onclick = function(event) {
-    editModal(id);
+  document.getElementById('showEditModal').onclick = function(event) {
+    $("#editForm").removeClass("disable");
+    $("#showEditModal").addClass("disable");
     }
 }
 
@@ -247,7 +206,7 @@ document.getElementById('saveEditTime').addEventListener("click", function(event
   let startTime = document.querySelector('#start-time').value;
   let endTime = document.querySelector('#end-time').value;
   let pauseTime = document.querySelector('#pause-time').value;
-  let selectedEditDay = document.querySelector('.selectedEditDay').innerHTML;
+  let selectedEditDay = document.querySelector('.selectedDay').innerHTML;
   let stringDay=selectedEditDay.substring(0, 2);
   let stringMonth = selectedEditDay.substring(3, 5);
   let stringYear = selectedEditDay.substring(6, 10);
@@ -268,19 +227,9 @@ document.getElementById('saveEditTime').addEventListener("click", function(event
           // console.log(msg);
           }
         });
-        // $('#editDayModal').modal('show');
-        // event.preventDefault();
 
     });
 
-
-function editModal(id){
-  const selectedEditDay = document.querySelector('.selectedEditDay');
-  selectedEditDay.innerHTML = convertDateWithDots(id);
-  //console.log(id);
-  $('#dayModal').modal('hide');
-  $('#editDayModal').modal('show');
-}
 
 function convertTime(checkDate){
   let date = new Date(checkDate * 1000 );
@@ -306,14 +255,10 @@ function convertTimeUTC(checkDate){
   }
 
 function getTime(){
-  // $('.workedHours').empty();
-  /* $('.workedHours').html('0');*/
   let countWorkedHours = 0;
   let dateShow = checkTime(month+1)+ String(year);
-  //console.log(dateShow);
   let normdHours = 0, percent = 0, wageWithTax, rate, wageWithoutTax = 0;
   let dbSalary = <?php echo $user_salary ?>;
-  // console.log(dbSalary);
   $.ajax({
         type: "GET",
         url: "time_tracking",
@@ -324,24 +269,22 @@ function getTime(){
         success: function (msg) {
         userDate = JSON.parse(msg);
         userTime = userDate[1];
-         userTime.forEach((item)=>{
+        userTime.forEach((item)=>{
           $('#'+item.date).html((item.total_worked/3600).toFixed(2)>=0?(item.total_worked/3600).toFixed(2):($().css('color','green')));
-          //countWorkedHours += parseInt(item.total_worked/3600);
           dbDate = item.date;
-
-          //console.log('db ' + dbDate.substring(2, 8));
+          if(!$.isEmptyObject($('#'+item.date).html())){
+            // console.log('--');
+            $('#'+item.date).parent().addClass("hover-block");
+          }
            if(dbDate.substring(2, 8) == dateShow){
             countWorkedHours += parseInt(item.total_worked);
 
-           }/* else{
-            countWorkedHours=0;
-           } */
+           }
 
           });
           countWorkedHoursConvert = (countWorkedHours/3600).toFixed(2);
-           // console.log(countWorkedHoursConvert);
-        $('.workedHours').html(countWorkedHoursConvert);
-    //console.log(checkTime(month+1), year );
+          $('.workedHours').html(countWorkedHoursConvert);
+
 
         userDate[2].forEach((item)=>{
           if (item.date == dateShow){
@@ -352,14 +295,13 @@ function getTime(){
               wageWithoutTax =0;
             }else{
               wageWithTax = (rate.toFixed(2))*countWorkedHoursConvert;
-            // console.log(wageWithTax.toFixed(2));
             if (wageWithTax>665){
               wageWithoutTax = wageWithTax.toFixed(2) -((wageWithTax*0.01)+(wageWithTax*0.13));
             }else{
               wageWithoutTax = wageWithTax.toFixed(2) -(((wageWithTax-110)*0.13)+(wageWithTax*0.01));
             }
             }
-            
+
           }
           $('.normdHours').html(normdHours);
           $('.workedPercent').html(percent.toFixed(2));

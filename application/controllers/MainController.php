@@ -27,17 +27,22 @@ class MainController extends Controller
 
             $result_user = $this->model->getUserId($_SESSION['user_id']);
             if ($result_user) {
-                $user_img = $result_user[0]['image'];
+                if(!empty($result_user[0]['image'])){
+                   $user_img = $result_user[0]['image']; 
+                }                
             }
 
-            $check_user_by_id = $this->model->checkUserByIdLast($_SESSION['user_id']);
-            //debug($check_user_by_id[0]['date']);
-            if ($date != $check_user_by_id[0]['date'] && $check_user_by_id[0]['status'] != 'день завершён') {
-                $status = $check_user_by_id[0]['status'];
-                $work_time = $check_user_by_id[0]['total_worked'];
-                $pause_time = $check_user_by_id[0]['total_pause'];
+            if ($check_user_by_id = $this->model->checkUserByIdLast($_SESSION['user_id'])) {
+                //debug($check_user_by_id[0]['date']);
+                if ($date != $check_user_by_id[0]['date'] && $check_user_by_id[0]['status'] != 'день завершён') {
+                    $status = $check_user_by_id[0]['status'];
+                    $work_time = $check_user_by_id[0]['total_worked'];
+                    $pause_time = $check_user_by_id[0]['total_pause'];
+                } else {
+                    $status = "не работаю";
+                }
             } else {
-                $status = "не работаю";
+                $status = "не работаю"; 
             }
 
             $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
@@ -158,31 +163,31 @@ class MainController extends Controller
         $default_value = $this->default_date();
         if ($_SESSION['rang'] == 'admin') {
             if (!empty($_POST)) {
-                if ((int)$_POST['month'] < 10){
-                   $month = "0".$_POST['month'];
+                if ((int) $_POST['month'] < 10) {
+                    $month = "0" . $_POST['month'];
                     // debug($month.$_POST['year']);
-                    $check_date = $this->model->checkDate($month.$_POST['year']);
-                    if($check_date){
+                    $check_date = $this->model->checkDate($month . $_POST['year']);
+                    if ($check_date) {
                         $default_value += [
                             'message' => 'На введённую дату уже есть данные',
                         ];
-                    }else{
-                        $add_month_hours = $this->model->addMonthHours($month.$_POST['year'],$_POST['norm']);
+                    } else {
+                        $add_month_hours = $this->model->addMonthHours($month . $_POST['year'], $_POST['norm']);
                         // if($add_month_hours){
-                            $this->view->redirect('/month_hours');
+                        $this->view->redirect('/month_hours');
                         // }
                     }
-                }               
-
-            }
-
-            if(!empty($_GET['norm'])){
-                if(!empty($_GET['newNorm'])){
-                    $edit_norm = $this->model->editNorm($_GET['date'],$_GET['newNorm']);
                 }
-               
+
             }
-          
+
+            if (!empty($_GET['norm'])) {
+                if (!empty($_GET['newNorm'])) {
+                    $edit_norm = $this->model->editNorm($_GET['date'], $_GET['newNorm']);
+                }
+
+            }
+
             $get_month_hours = $this->model->monthHours();
             $default_value += [
                 'month_hours' => $get_month_hours,
@@ -216,7 +221,7 @@ class MainController extends Controller
 
         if (isset($_POST['salary'])) {
             $update_user = $this->model->updateUserSalary($_POST['id'], $_POST['salary']);
-            $this->view->redirect('/profile?id=' . $_POST['id']); 
+            $this->view->redirect('/profile?id=' . $_POST['id']);
         }
 
         $this->view->render('страница профиля', $default_value);
@@ -228,7 +233,7 @@ class MainController extends Controller
             if (ctype_digit($_GET['id'])) {
                 if ($_GET['id'] == $_SESSION['user_id'] || ($_SESSION['rang'] == 'admin')) {
                     $result_user = $this->model->getUserId($_GET['id']);
-                    $user_name = $result_user[0]['user_name'];
+                    $user_name = strip_tags($result_user[0]['user_name']);
                     $phone = $result_user[0]['phone'];
                     $email = $result_user[0]['email'];
                     $password = $result_user[0]['password'];
@@ -242,7 +247,7 @@ class MainController extends Controller
                     }
                     if (!empty($_POST)) {
                         $file_name = null;
-                        $user_name = $_POST['user_name'];
+                        $user_name = strip_tags($_POST['user_name']);
                         $phone = $_POST['phone'];
                         $email = $_POST['email'];
                         $old_password = $_POST['old_password'];
@@ -271,8 +276,6 @@ class MainController extends Controller
                                         $update_user = $this->model->updateProfile($_GET['id'], $user_name, $file_name, $email, $phone, md5($password));
                                         if ($update_user) {
                                             $this->view->redirect('profile_edit?id=' . $_GET['id']);
-                                        } else {
-                                            echo 'error';
                                         }
                                     }
                                 } else {
@@ -289,8 +292,6 @@ class MainController extends Controller
                             $update_user = $this->model->updateProfile($_GET['id'], $user_name, $file_name, $email, $phone, $password);
                             if ($update_user) {
                                 $this->view->redirect('profile_edit?id=' . $_GET['id']);
-                            } else {
-                                echo 'error';
                             }
                         }
                     }
@@ -318,7 +319,7 @@ class MainController extends Controller
                 move_uploaded_file($_FILES['image']['tmp_name'], $uploadfile);
             }
 
-            $result_news = $this->model->addNews($_SESSION['user_id'], $_POST['title'], $file_name, $_POST['description']);
+            $result_news = $this->model->addNews($_SESSION['user_id'], strip_tags($_POST['title']), $file_name, strip_tags($_POST['description'], '<p><br><b></b><i></i>'));
 
             if ($result_news) {
                 $this->view->redirect('/');
@@ -367,7 +368,7 @@ class MainController extends Controller
                 $result = $this->model->getNewsById($_GET['id']);
                 //debug($result);
                 if ($result) {
-                    $default_value  += [
+                    $default_value += [
                         'news' => $result[0],
                     ];
                 } else {
@@ -389,7 +390,7 @@ class MainController extends Controller
                         $uploadfile = $uploaddir . basename($file_name);
                         move_uploaded_file($_FILES['image']['tmp_name'], $uploadfile);
                     }
-                    $update_news = $this->model->updateNews($_GET['id'], $_POST['title'], $file_name, $_POST['description']);
+                    $update_news = $this->model->updateNews($_GET['id'], strip_tags($_POST['title']), $file_name, strip_tags($_POST['description'], '<p><br><b></b><i></i>'));
                     //debug($update_news);
                     if ($update_news) {
                         $this->view->redirect('/news?id=' . $_GET['id']);

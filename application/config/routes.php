@@ -16,6 +16,7 @@ return [
         'action' => 'users',
     ],
 
+
     'month_hours' => [
         'controller' => 'main',
         'action' => 'month_hours',
@@ -69,6 +70,11 @@ return [
     'account/register' => [
         'controller' => 'account',
         'action' => 'register',
+    ],
+
+    'account/recovery' => [
+        'controller' => 'account',
+        'action' => 'recovery',
     ],
 
     'api/time' => [

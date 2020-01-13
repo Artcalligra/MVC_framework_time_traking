@@ -9,12 +9,11 @@
         <label for="loginUserName">Пароль</label>
         <input type="password" name = "password" class="form-control item-size" id="loginUserName" placeholder="Введите пароль" required>
     </div>
-    <!-- <p>Имя</p>
-    <p><input type="text" name = "user_name" class = "item-size" required></p> 
-    <p>Пароль</p>
-    <p><input type="password" name = "password" class = "item-size" required></p>-->
     <button type = "submit" class = "btn item-size" >Войти</button>
 </form>
+<div class = "block-form__recovery-pass">
+    <a href = "/account/recovery">Забыли пароль?</a>
+</div>
 <div class = "block-form__sign">
     <span>Создать аккаунт? <a href = "/account/register">Создать</a></span>
 </div>
