@@ -9,7 +9,7 @@
         </div>
             <p><?php if (isset($message)) {
     echo ($message);}?></p>
-        <div class = "main-content__content__profile-img"><img src="<?php echo $user['image'] ?>" alt="user img"></div>
+        <div class = "main-content__content__profile-img"><img src="<?php echo $user['image'];?>" alt="user img"></div>
         <form action = "/profile?id=<?php echo $_GET['id']; ?>" method = "POST">
         <?php if ($_SESSION['rang'] == 'admin') {?>
                 <div class = "row">

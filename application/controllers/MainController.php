@@ -22,15 +22,15 @@ class MainController extends Controller
             $status = "не работаю";
             $work_time = 0;
             $pause_time = 0;
-            $user_img = "public/images/default_user.jpg";
+            // $user_img = "public/images/default_user.jpg";
             $rang = $_SESSION['rang'];
 
             $result_user = $this->model->getUserId($_SESSION['user_id']);
-            if ($result_user) {
+            /* if ($result_user) {
                 if(!empty($result_user[0]['image'])){
                    $user_img = $result_user[0]['image']; 
                 }                
-            }
+            } */
 
             if ($check_user_by_id = $this->model->checkUserByIdLast($_SESSION['user_id'])) {
                 //debug($check_user_by_id[0]['date']);
@@ -58,7 +58,7 @@ class MainController extends Controller
 
             $default_value = [
                 'user_name' => $result_user[0]['user_name'],
-                'user_img' => $user_img,
+                'user_img' => $result_user[0]['image'],
                 'current_time' => $current_time,
                 'status' => $status,
                 'work_time' => $work_time,
@@ -100,8 +100,10 @@ class MainController extends Controller
 
         if (isset($_POST['user'])) {
             if ($_POST['user'] == 'editTime') {
+                $selectedUser = $_POST['selectedUser'];
+
                 $date = $_POST['date'];
-                $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
+                $check_user = $this->model->checkUser($selectedUser, $date);
                 $start_time = $check_user[0]['start'];
                 $end_time = $check_user[0]['end'];
                 $pause_time = $check_user[0]['total_pause'];
@@ -122,8 +124,8 @@ class MainController extends Controller
                     $edit_hours = substr($_POST['editPause'], 0, 2);
                     $pause_time = (($edit_hours * 60) + substr($_POST['editPause'], 3, 2)) * 60;
                 }
-                $edit_time = $this->model->editTime($_SESSION['user_id'], $date, $start_time, $pause_time, $end_time);
-                //debug($start_time. " ". $end_time. " ".$pause_time);
+                 $edit_time = $this->model->editTime($selectedUser, $date, $start_time, $pause_time, $end_time, strip_tags($_POST['reason']));
+                // debug($start_time. " ". $end_time. " ".$pause_time);
             }
         }
 
@@ -148,8 +150,10 @@ class MainController extends Controller
         if ($_SESSION['rang'] == 'admin') {
             $default_value = $this->default_date();
             $get_all_users = $this->model->getAllUsers();
+            $get_all_time = $this->model->getAllTime();
             $default_value += [
                 'all_users' => $get_all_users,
+                'all_time' =>$get_all_time,
             ];
             $this->view->render('страница пользователей', $default_value);
         } else {
@@ -206,8 +210,15 @@ class MainController extends Controller
             if (ctype_digit($_GET['id'])) {
                 $result_user = $this->model->getUserId($_GET['id']);
                 if ($result_user) {
+                    //  debug($result_user);
+                    /* if(empty($result_user[0]['image'])){
+                        $user_img = "public/images/default_user.jpg";
+                    }else{
+                        $user_img =$result_user[0]['image']; 
+                    } */
                     $default_value += [
                         'user' => $result_user[0],
+                        // 'user_img' => $user_img,
                     ];
                 } else {
                     View::errorCode(404);
@@ -238,9 +249,14 @@ class MainController extends Controller
                     $email = $result_user[0]['email'];
                     $password = $result_user[0]['password'];
                     if ($result_user) {
-                        //debug($result_user);
+                        /* if(empty($result_user[0]['image'])){
+                            $user_img = "public/images/default_user.jpg";
+                        }else{
+                            $user_img =$result_user[0]['image']; 
+                        } */
                         $default_value += [
                             'user' => $result_user[0],
+                            // 'user_img' => $user_img,
                         ];
                     } else {
                         View::errorCode(404);

@@ -52,21 +52,27 @@
 
           <form class = "disable" id = "editForm">
             <div class = "form-group row">
-              <label for="start-time" class="col-2 col-form-label">Время начала: </label>
+              <label for="start-time" class="col-5 col-form-label">Время начала: </label>
               <div class="col-4">
                 <input class="form-control" type="time" min="09:00" max="22:00" id="start-time">
               </div>
             </div>
             <div class = "form-group row">
-              <label for="end-time" class="col-2 col-form-label">Время окончания:</label>
+              <label for="end-time" class="col-5 col-form-label">Время окончания:</label>
               <div class="col-4">
                 <input class="form-control" type="time" min="09:00" max="23:00" id="end-time">
               </div>
             </div>
             <div class = "form-group row">
-              <label for="pause-time" class="col-2 col-form-label">Перерыв:</label>
+              <label for="pause-time" class="col-5 col-form-label">Перерыв:</label>
               <div class="col-4">
                 <input class="form-control" type="time" min="00:00" max="03:00" id="pause-time">
+              </div>
+            </div>
+            <div class = "form-group row">
+              <label for="reason" class="col-5 col-form-label">Причина изменения:</label>
+              <div class="col-7">
+                <textarea class="form-control" id="reason" required ></textarea>
               </div>
             </div>
             <button type="submit" id = "saveEditTime" class="btn btn-primary">Сохранить</button>
@@ -134,7 +140,10 @@ window.addEventListener("load",function(event) {
   if ($("#selectUser").length){
     let inserSelectUser = selectUser.getElementsByTagName('option');
       for (let i = 0; i < inserSelectUser.length; i++) {
-        if (inserSelectUser[i].value == 1) inserSelectUser[i].selected = true;
+        if (inserSelectUser[i].value == 1) {
+          inserSelectUser[i].selected = true;
+          selectedUser = inserSelectUser[i].value;
+        }
       }
   }
 
@@ -183,9 +192,11 @@ function createModal(id,val){
         if(item.end>0){
           let timeEndConvert = convertTime(item.end);
           timeEnd.innerHTML = timeEndConvert;
+          document.getElementById('saveEditTime').disabled = false;
         }else{
           timeEndConvert = convertTimeUTC(item.end);
           timeEnd.innerHTML = timeEndConvert;
+          document.getElementById('saveEditTime').disabled = true;
         }
         let timePauseConvert = convertTimeUTC(item.total_pause);
         timePause.innerHTML = timePauseConvert;
@@ -206,28 +217,31 @@ document.getElementById('saveEditTime').addEventListener("click", function(event
   let startTime = document.querySelector('#start-time').value;
   let endTime = document.querySelector('#end-time').value;
   let pauseTime = document.querySelector('#pause-time').value;
+  let reason = document.querySelector('#reason').value;
   let selectedEditDay = document.querySelector('.selectedDay').innerHTML;
   let stringDay=selectedEditDay.substring(0, 2);
   let stringMonth = selectedEditDay.substring(3, 5);
   let stringYear = selectedEditDay.substring(6, 10);
   let daty = new Date(stringYear, stringMonth-1, stringDay);
   let dateWothoutDots=selectedEditDay.replace(/\./g, "");
-
+//  console.log(selectedUser);
     $.ajax({
           type: "POST",
           url: "time_tracking",
           data: {
           'user': 'editTime',
+          'selectedUser': selectedUser,
           'date' : dateWothoutDots,
           'editStart': startTime,
           'editEnd': endTime,
           'editPause': pauseTime,
+          'reason': reason,
           },
           success: function (msg) {
-          // console.log(msg);
+          //  console.log(msg);
           }
         });
-
+        //  event.preventDefault();
     });
 
 
@@ -334,7 +348,6 @@ function getTime(){
 
   if ($("#selectUser").length){
     selectUser.addEventListener('change', function() {
-
       selectedUser = selectUser.value;
       createCalendar(calendar, year, month+1);
       getTime();

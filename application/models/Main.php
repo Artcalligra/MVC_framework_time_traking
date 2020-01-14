@@ -60,6 +60,12 @@ class Main extends Model
         return $date;
     }
 
+    public function getAllTime()
+    {
+        $date = $this->db->row('SELECT * FROM times');
+        return $date;
+    }
+
     public function checkUserByIdLast($user_id)
     {
         $db = new Db;
@@ -174,7 +180,7 @@ class Main extends Model
 
     }
 
-    public function editTime($user_id, $date, $start_time, $pause, $end_time)
+    public function editTime($user_id, $date, $start_time, $pause, $end_time, $reason)
     {
         $total_worked = $end_time - $start_time - $pause;
         $db = new Db;
@@ -185,10 +191,11 @@ class Main extends Model
             'total_pause' => $pause,
             'end' => $end_time,
             'total_worked' => $total_worked,
+            'reason_for_editing' => $reason,
 
         ];
 
-        $date = $this->db->row('UPDATE times SET start = :start, total_pause = :total_pause, end = :end, total_worked = :total_worked  WHERE user_id = :user_id AND date = :date', $params);
+        $date = $this->db->row('UPDATE times SET start = :start, total_pause = :total_pause, end = :end, total_worked = :total_worked, reason_for_editing = :reason_for_editing  WHERE user_id = :user_id AND date = :date', $params);
         return $date;
     }
 

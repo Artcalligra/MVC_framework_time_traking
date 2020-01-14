@@ -1,8 +1,10 @@
 <h2>Регистрация</h2>
+<p><?php if(isset($message)){
+    echo($message);} ?></p>
 <form action = "/account/register" method = "POST">
     <div class="form-group">
         <label for="registerUserName">Имя</label>
-        <input type="text" name = "user_name" class="form-control item-size" id="registerUserName" placeholder="Введите имя" required>
+        <input type="text" name = "user_name" class="form-control item-size" id="registerUserName" placeholder="Введите имя" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$" title="до 20 символов (буквы, цифры), первый симлов обязательно буква" required>
     </div>
     <div class="form-group">
         <label for="registerUserEmail">Email</label>
@@ -10,27 +12,16 @@
     </div>
     <div class="form-group">
         <label for="registerUserName">Пароль</label>
-        <input type="password" name = "password" class="form-control item-size" id="registerUserName" placeholder="Введите пароль" required>
+        <input type="password" name = "password" class="form-control item-size" id="registerUserName" placeholder="Введите пароль" pattern="^(?=.*\d)(?=.*[a-zA-Z])(?!.*\s).{5,}$" title="от 5 символов (буквы + цифры), обязательно одна заглавная буква" required>
     </div>
     <div class="form-group">
         <label for="registerUserName">Подтверждение пароля</label>
-        <input type="password" name = "password_confirm" class="form-control item-size" id="registerUserName" placeholder="Повторите пароль" required>
-    </div>
+        <input type="password" name = "password_confirm" class="form-control item-size" id="registerUserName" placeholder="Повторите пароль" pattern="^(?=.*\d)(?=.*[a-zA-Z])(?!.*\s).{5,}$"  title="от 5 символов (буквы + цифры), обязательно одна заглавная буква" required>
+    </div><!-- "^(?=.*\d)(?=.*[a-zA-Z])(?=.*[A-Z])(?!.*\s).{5,}$" -->
 
-  <!--   <p>Имя</p>
-    <p><input type="text" name = "user_name" class = "item-size" required></p>
-    <p>E-mail</p>
-    <p><input type="email" name = "email" class = "item-size" required></p>
-    <p>Пароль</p>
-    <p><input type="password" name = "password" class = "item-size" required></p>
-    <p>Подтверждение пароля</p>
-    <p><input type="password" name = "password_confirm" class = "item-size" required></p> -->
     <button type = "submit" class = "item-size">Зарегистрироваться</button>
 </form>
 <div class = "block-form__sign">
     <span>У вас есть аккаунт? <a href = "/account/login">Войти</a></span>
 </div>
 
-
-<p><?php if(isset($message)){
-    echo($message);} ?></p>

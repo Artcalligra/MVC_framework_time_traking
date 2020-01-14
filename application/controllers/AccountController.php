@@ -11,29 +11,21 @@ class AccountController extends Controller
     {
         $this->view->layout = 'login_register';
 
-        // $this->view->path = 'test/login';
-        // $this->view->redirect('/');
-
         if (!empty($_POST)) {
             $user_name = strip_tags($_POST['user_name']);
             $password = md5($_POST['password']);
             $result = $this->model->getUser($user_name, $password);
-            // debug($result[0]['id']);
             if ($result) {
                 $_SESSION['user_id'] = $result[0]['id'];
                 $_SESSION['rang'] = $result[0]['rang'];
                 $this->view->redirect('/');
             } else {
-
                 $vars = [
                     'message' => 'Ошибка логина или пароля.',
                 ];
                 $this->view->render('страница входа', $vars);
             }
         } else {
-            /*  $vars = [
-            'message' => '',
-            ]; */
             $this->view->render('страница входа');
         }
 
@@ -66,7 +58,6 @@ class AccountController extends Controller
                             $this->view->render('страница регистрации', $vars);
                         } else {
                             $register_user = $this->model->registerUser($user_name, md5($password), $email);
-                            // debug($result);
                             $this->view->redirect('/account/login');
                         }
                     } else {
@@ -97,11 +88,9 @@ class AccountController extends Controller
             $check_email = $this->model->checkEmail($_POST['email']);
             if ($check_email) {
                 $random_number = substr(md5(rand(0, 1000)), 0, 6);
-                // debug($random_number);
                 $to = $check_email[0]['email'];
 
                 $subject = "Восстановление пароля";
-
                 $message = ' <p>Новый пароль</p> <b>' . $random_number . ' </b> ';
 
                 $headers = "Content-type: text/html; charset=utf-8 \r\n";
