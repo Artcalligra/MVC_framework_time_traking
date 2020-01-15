@@ -11,8 +11,8 @@
           <select id="selectUser">
             <!-- <option selected>Не выбрано</option> -->
             <?php foreach ($all_users as $val): ?>
-              <option value="<?php echo $val['id']; ?>"><?php echo $val['user_name']; ?></option>
-              <?php endforeach;?>
+              <option value="<?php echo $val['id']; ?>"   ><?php echo $val['user_name']; ?></option>
+              <?php endforeach;?><!-- data-rang ="<?php echo $val['rang']; ?>" -->
             </select></p>
         </div>
     <?php }?>
@@ -138,9 +138,12 @@ window.addEventListener("load",function(event) {
     if (inserSelectYear[i].value == year) inserSelectYear[i].selected = true;
   }
   if ($("#selectUser").length){
+   
     let inserSelectUser = selectUser.getElementsByTagName('option');
+    
       for (let i = 0; i < inserSelectUser.length; i++) {
-        if (inserSelectUser[i].value == 1) {
+        if (selectUser.options[i].value == <?php echo $_SESSION['user_id']?>) {
+          // if (selectUser.options[i].dataset.rang == 'admin') {
           inserSelectUser[i].selected = true;
           selectedUser = inserSelectUser[i].value;
         }
@@ -347,8 +350,9 @@ function getTime(){
   });
 
   if ($("#selectUser").length){
-    selectUser.addEventListener('change', function() {
+    selectUser.addEventListener('change', function(event) {
       selectedUser = selectUser.value;
+      // console.log(selectedUser); 
       createCalendar(calendar, year, month+1);
       getTime();
     });

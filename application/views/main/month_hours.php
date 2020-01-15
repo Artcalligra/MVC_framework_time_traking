@@ -2,8 +2,8 @@
     <div class = "main-content__content__monthHours__back">
         <a href = "/">Назад</a>
     </div>
-    <p><?php if (isset($message)) {
-    echo ($message);}?></p>
+    <?php if (isset($message)) {?><p>
+    <?php echo ($message);?></p><?php }?>
     <h2>Нормы часов по месяцам</h2>
     <div class="row">
         <div class="col-4 col-md-3">Год</div>

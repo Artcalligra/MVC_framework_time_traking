@@ -7,8 +7,8 @@
         <div class = "main-content__content__profile-item__name">
             <h2><?php echo $user['user_name']; ?></h2>
         </div>
-            <p><?php if (isset($message)) {
-    echo ($message);}?></p>
+        <?php if (isset($message)) {?><p>
+    <?php echo ($message);?></p><?php }?>
         <div class = "main-content__content__profile-img"><img src="<?php echo $user['image'];?>" alt="user img"></div>
         <form action = "/profile?id=<?php echo $_GET['id']; ?>" method = "POST">
         <?php if ($_SESSION['rang'] == 'admin') {?>

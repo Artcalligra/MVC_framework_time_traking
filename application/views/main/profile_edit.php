@@ -6,8 +6,8 @@
     </div>
     <div class = "main-content__content__profile-edit-item">
 
-            <p><?php if (isset($message)) {
-    echo ($message);}?></p>
+    <?php if (isset($message)) {?><p>
+    <?php echo ($message);?></p><?php }?>
         <div class = "main-content__content__profile-img"><img src="<?php echo $user['image']; ?>" alt="user img"></div>
         <form enctype="multipart/form-data" action = "/profile_edit?id=<?php echo $_SESSION['user_id']; ?>" method = "POST">
             <input type="file" name="image" accept=".jpg, .jpeg, .png">

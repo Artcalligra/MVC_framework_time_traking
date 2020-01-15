@@ -3,8 +3,8 @@
         <a href = "/">Назад</a>
     </div>
     <h2>Создание новости</h2>
-    <p><?php if (isset($message)) {
-    echo ($message);}?></p>
+    <?php if (isset($message)) {?><p>
+    <?php echo ($message);?></p><?php }?>
     <form enctype="multipart/form-data" action = "/news_create" method = "POST">
         <div class = "main-content__content__add-news__title">
             <h3>Заголовок</h3>

@@ -32,9 +32,10 @@ class Account extends Model
             'password' => $password,
             'email' => $email,
             'image' => "public/images/default_user.jpg",
+            'salary' => 300,
         ];
 
-        $date = $db->query('INSERT INTO users SET user_name = :user_name, password = :password, email = :email, image = :image, rang = "user" ', $params);
+        $date = $db->query('INSERT INTO users SET user_name = :user_name, password = :password, email = :email, image = :image, rang = "user", salary = :salary ', $params);
         return $date;
     }
 

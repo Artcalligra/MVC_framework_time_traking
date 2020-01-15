@@ -3,8 +3,8 @@
         <a href = "/news?id=<?php echo $news['id']; ?>">Назад</a>
     </div>
     <h2>Редактирование новости</h2>
-    <p><?php if (isset($message)) {
-    echo ($message);}?></p>
+    <?php if (isset($message)) {?><p>
+    <?php echo ($message);?></p><?php }?>
     <form enctype="multipart/form-data" action = "/news_edit?id=<?php echo $news['id'];?>" method = "POST">
         <div class = "main-content__content__edit-news__title">
             <h3>Заголовок</h3>

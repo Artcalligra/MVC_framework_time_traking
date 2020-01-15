@@ -16,5 +16,5 @@
 <!-- <div class = "block-form__sign">
     <span>Создать аккаунт? <a href = "/account/register">Создать</a></span>
 </div> -->
-<p><?php if (isset($message)) {
-    echo ($message);}?></p>
+<?php if (isset($message)) {?><p>
+    <?php echo ($message);?></p><?php }?>

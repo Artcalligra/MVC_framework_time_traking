@@ -1,6 +1,6 @@
 <h2>Регистрация</h2>
-<p><?php if(isset($message)){
-    echo($message);} ?></p>
+<?php if (isset($message)) {?><p>
+    <?php echo ($message);?></p><?php }?>
 <form action = "/account/register" method = "POST">
     <div class="form-group">
         <label for="registerUserName">Имя</label>
