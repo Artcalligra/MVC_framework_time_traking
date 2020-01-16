@@ -3,6 +3,34 @@
     src: url(/public/fonts/10262.otf);
 }
 
+a {
+    color: #268b8c;
+}
+
+a:hover {
+    color: #175959;
+}
+
+.btn-primary {
+    background: #237576;
+    border-color: #237576;
+}
+
+.btn-primary:hover{
+    background: #268b8c !important;
+    border-color: #268b8c !important;
+}
+.btn-primary:focus{
+    background: #268b8c !important;
+    border-color: #268b8c !important;
+}
+
+.btn-primary:active{
+    background: #268b8c !important;
+    border-color: #268b8c !important;
+}
+
+
 /* container */
 /* .container {
     padding-right: 15px;
@@ -28,6 +56,3 @@
         width: 750px;
     }
 } */
-
-
-

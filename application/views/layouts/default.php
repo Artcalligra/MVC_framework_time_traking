@@ -19,7 +19,7 @@
         <div class = "container">
             <div class = "row header-items">
                 <!-- <div class = "header-items"> -->
-                    <div class = "header-item header-items__logo col-md-6">
+                    <div class = "header-item header-items__logo col-md-7">
                         <a href="/"><img src="/public/images/logo.png" alt="logo"></a>
                     </div>
                     <div class= "header-item header-items__times col-md-3 dropdown open">
@@ -49,7 +49,7 @@
                                 <div id="timer_pause"><?php echo $date = date("H:i:s", $pause_time); ?></div>
                             </div>   
                             <div class = "header-items__time-popup__button dropdown-item" >                    
-                            <input id="button_start" class = "disable <?php 
+                            <input id="button_start" class = " btn btn-success disable <?php 
                             switch ($status) {
                                 case "не работаю":
                                     echo 'active';
@@ -63,7 +63,7 @@
                                     break;
                                 }
                                 ?>" type="button" value="Начать рабочий день" onclick="get_time()" />
-                            <input id="button_pause" class = "disable <?php 
+                            <input id="button_pause" class = "btn btn-light disable <?php 
                             switch ($status) {
                                 case "не работаю":
                                     break;
@@ -76,7 +76,7 @@
                                     break;
                                 }
                                 ?>" type="button" value="Перерыв" onclick="pause_time()" />
-                            <input id="button_end_pause" class = "disable <?php 
+                            <input id="button_end_pause" class = "btn btn-light disable <?php 
                             switch ($status) {
                                 case "не работаю":
                                     break;
@@ -89,7 +89,7 @@
                                     break;
                                 }
                                 ?>" type="button" value="Закончить перерыв" onclick="end_pause_time()" />
-                            <input id="button_stop" class ="disable <?php 
+                            <input id="button_stop" class ="btn btn-danger disable <?php 
                             switch ($status) {
                                 case "не работаю":
                                     break;
@@ -106,7 +106,7 @@
                                 </div>
                         </div>
                     </div>
-                    <div class = "header-item header-items__user col-md-3 ">
+                    <div class = "header-item header-items__user col-md-2 ">
                         <!-- <div class = "header-items__user-img"></div> -->
                         <div class = "row header-items__user dropdown open">
                             <div class= "header-items__user-img"><img src="<?php echo $user_img ?>" alt="user img"></div>

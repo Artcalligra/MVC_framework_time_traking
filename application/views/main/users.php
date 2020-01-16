@@ -1,5 +1,5 @@
 <div class = "main-content__content__users">
-    <div class = "main-content__content__users__back">
+    <div class = "main-content__content__back">
         <a href = "/">Назад</a>
     </div>
     <h2>Пользователи</h2>

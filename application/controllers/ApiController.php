@@ -47,6 +47,7 @@ class ApiController extends Controller
                     } else {
                         $check_user = $this->model->checkUser($_SESSION['user_id'], $date);
                         $total_work = $current_time - $check_user[0]['buffer_start'];
+                        // debug($date);
                         $add_pause = $this->model->addPause($_SESSION['user_id'], $date, $current_time, $total_work);
                     }
                     break;
@@ -55,6 +56,7 @@ class ApiController extends Controller
                     if ($date != $check_user_by_id[0]['date']) {
                         $check_user = $this->model->checkUser($_SESSION['user_id'], $check_user_by_id[0]['date']);
                         $total_pause = $current_time - $check_user[0]['buffer_pause'];
+                
                         $continue_work = $this->model->continueWork($_SESSION['user_id'], $check_user_by_id[0]['date'], $current_time, $total_pause);
                     } else {
                         $check_user = $this->model->checkUser($_SESSION['user_id'], $date);

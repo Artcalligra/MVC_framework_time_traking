@@ -1,5 +1,5 @@
 <div class = "main-content__content__monthHours">
-    <div class = "main-content__content__monthHours__back">
+    <div class = "main-content__content__back">
         <a href = "/">Назад</a>
     </div>
     <?php if (isset($message)) {?><p>
@@ -56,30 +56,18 @@
         </div>
         <div class="modal-body">
           <form>
-            <!-- <div class = "form-group row">
-              <label for="edit_month" class="col-2 col-form-label">Месяц: </label>
-              <div class="col-4">
-                <input class="form-control" type="number" min="1" max="24" id="edit_month">
-              </div>
-            </div> -->
             <div class = "form-group row">
               <label for="edit_norm" class="col-2 col-form-label">Норма:</label>
               <div class="col-4">
                 <input class="form-control" type="number" min="150" max="190" id="edit_norm">
               </div>
             </div>
-<!--             <div class = "form-group row">
-              <label for="pause-time" class="col-2 col-form-label">Перерыв:</label>
-              <div class="col-4">
-                <input class="form-control" type="time" min="00:00" max="03:00" id="pause-time">
-              </div>
-            </div> -->
+
             <button type="submit" id = "saveEditNorm" class="btn btn-primary">Сохранить</button>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
         </div>
       </div>
     </div>

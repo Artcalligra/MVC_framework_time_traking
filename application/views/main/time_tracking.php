@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="/public/styles/tracking.css"/>
 <!-- <script type="text/javascript" src="/public/scripts/calendar.js"></script> -->
 <div class = "main-content__content__tracking">
-  <div class = "main-content__content__tracking__back">
+  <div class = "main-content__content__back">
       <a href = "/">Назад</a>
   </div>
   <h2>Отчет по рабочему времени <!-- <?php echo $user_name; ?> --></h2>
@@ -19,18 +19,24 @@
   <select id="selectYear"> </select>
   <select id="selectMonth"> </select>
   <div id = "calendar"></div>
-  <div class = "main-content__content__tracking-worked row">
-    <div class = "col-md-3 main-content__content__tracking-worked__hours"><p>Отработано часов: <b class = "workedHours"></b></p></div>
-    <div class = "col-md-3 main-content__content__tracking-worked__norm"><p>Норма часов: <b class = "normdHours"></b></p></div>
-    <div class = "col-md-3 main-content__content__tracking-worked__percent"><p>Процент: <b class = "workedPercent"></b></p></div>
-    <div class = "col-md-3 main-content__content__tracking-worked__salary"><p>ЗП: <b class = "workedSalary"></b></p></div>
+  <div class = "main-content__content__tracking-hours row">
+    <div class = "col-md-6 main-content__content__tracking-worked__hours"><p>Отработано часов: <b class = "workedHours"></b></p></div>
+    <div class = "col-md-6 main-content__content__tracking-worked__norm"><p>Норма часов: <b class = "normdHours"></b></p></div>
+    <!-- <div class = "col-md-3 main-content__content__tracking-worked__percent"><p>Процент: <b class = "workedPercent"></b></p></div>
+    <div class = "col-md-3 main-content__content__tracking-worked__salary"><p>ЗП: <b class = "workedSalary"></b></p></div> -->
+  </div>
+  <div class = "main-content__content__tracking-salary row">
+    <!-- <div class = "col-md-3 main-content__content__tracking-worked__hours"><p>Отработано часов: <b class = "workedHours"></b></p></div>
+    <div class = "col-md-3 main-content__content__tracking-worked__norm"><p>Норма часов: <b class = "normdHours"></b></p></div> -->
+    <div class = "col-md-6 main-content__content__tracking-worked__percent"><p>Процент: <b class = "workedPercent"></b></p></div>
+    <div class = "col-md-6 main-content__content__tracking-worked__salary"><p>ЗП: <b class = "workedSalary"></b></p></div>
   </div>
 
   <div class="modal fade" id="dayModal" tabindex="-1" role="dialog" aria-labelledby="dayModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title" id="dayModalLabel">Отчёт за день</h4>
+          <h4 class="modal-title" id="dayModalLabel" class = "modal-title">Отчёт за день</h4>
           <p class="selectedDay"></p>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>

@@ -1,14 +1,12 @@
-<h2>Восстановление пароля</h2>
+<h2 class="card-title text-center">Восстановление пароля</h2>
 <form action = "/account/recovery" method = "POST">
     <div class="form-group">
         <label for="emailRecovery">Email</label>
-        <input type="email" name = "email" class="form-control item-size" id="emailRecovery" placeholder="Введите email" required>
+        <input type="email" name = "email" class="form-control" id="emailRecovery" placeholder="Введите email" required>
     </div>
-<!--     <div class="form-group">
-        <label for="loginUserName">Пароль</label>
-        <input type="password" name = "password" class="form-control item-size" id="loginUserName" placeholder="Введите пароль" required>
-    </div> -->
-    <button type = "submit" class = "btn item-size" >Отправить</button>
+    <div class=" text-center">
+        <button type = "submit" class = "btn btn btn-primary" >Отправить</button>
+    </div>
 </form>
 <div class = "block-form__sign">
     <a href = "/account/login">Войти</a>

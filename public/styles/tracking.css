@@ -15,10 +15,13 @@
     margin-top: 0;
 }
 
-.main-content__content__tracking-worked__hours p {
+/* .main-content__content__tracking-worked__hours p {
     white-space: nowrap;
-}
+} */
 
 .hover-block:hover {
     border: 2px inset #75b6b6;
+}
+.modal-title{
+    padding-right: 10px;
 }

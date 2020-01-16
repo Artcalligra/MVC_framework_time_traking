@@ -1,7 +1,7 @@
 /* body */
 
 body {
-    background: #bde5f1;
+    background: #75b6b6;
 }
 
 /* регистрация и авторизация */
@@ -54,9 +54,8 @@ body {
     font-size: 0.8em;
 } */
 
-.item-size {
-    width: 100%;
-    padding: 12px 15px;
+form{
+    margin-bottom: 15px;
 }
 
 .block-form__sign, .block-form__recovery-pass {

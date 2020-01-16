@@ -93,7 +93,7 @@ function sendStatus(status) {
         success: function (msg) {
             //console.log("Прибыли данные: " + msg);
             person = JSON.parse(msg);
-            //console.log(person);
+            console.log(msg);
             switch (person["status"]) {
                 case 'не работаю':
                     $("#button_start").addClass("active");

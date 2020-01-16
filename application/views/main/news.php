@@ -1,5 +1,5 @@
 <div class = "main-content__content__all-news">
-    <div class = "main-content__content__all-news__back">
+    <div class = "main-content__content__back">
         <a href = "/">Назад</a>
     </div>      
 

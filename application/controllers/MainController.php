@@ -328,14 +328,14 @@ class MainController extends Controller
     {
         if (!empty($_POST)) {
             $file_name = null;
-            if (is_uploaded_file($_FILES['image']['tmp_name'])) {
+            if (is_uploaded_file($_FILES['news-image']['tmp_name'])) {
                 $uploaddir = $_SERVER["DOCUMENT_ROOT"] . '/public/images/user_images/';
-                $file_name = '/public/images/user_images/' . $_FILES['image']['name'] . '_' . time();
+                $file_name = '/public/images/user_images/' . $_FILES['news-image']['name'] . '_' . time();
                 $uploadfile = $uploaddir . basename($file_name);
-                move_uploaded_file($_FILES['image']['tmp_name'], $uploadfile);
+                move_uploaded_file($_FILES['news-image']['tmp_name'], $uploadfile);
             }
 
-            $result_news = $this->model->addNews($_SESSION['user_id'], strip_tags($_POST['title']), $file_name, strip_tags($_POST['description'], '<p><br><b></b><i></i>'));
+            $result_news = $this->model->addNews($_SESSION['user_id'], strip_tags($_POST['news-title']), $file_name, strip_tags($_POST['news-description'], '<p><br><b></b><i></i>'));
 
             if ($result_news) {
                 $this->view->redirect('/');

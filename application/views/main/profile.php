@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="/public/styles/profile.css"/>
 <div class = "main-content__content__profile">
-    <div class = "main-content__content__profile__back">
+    <div class = "main-content__content__back">
         <a href = "/">На главную</a>
     </div>
     <div class = "main-content__content__profile-item">
@@ -12,18 +12,21 @@
         <div class = "main-content__content__profile-img"><img src="<?php echo $user['image'];?>" alt="user img"></div>
         <form action = "/profile?id=<?php echo $_GET['id']; ?>" method = "POST">
         <?php if ($_SESSION['rang'] == 'admin') {?>
-                <div class = "row">
                     <div class = "main-content__content__profile-item__salary">
-                        <p>Оклад: <input type="number" name="salary" value="<?php echo $user['salary']; ?>"></p>
+                        <div class = "form-group row">
+                            <label for="user-salary" class="col-3 col-form-label">Оклад (руб): </label>
+                            <div class="col-3">
+                                <input type="number" class = "form-control" name="salary" id = "user-salary" value="<?php echo $user['salary']; ?>">
+                            </div>
+                        </div>
                     </div>
                     <div class = "main-content__content__profile-item__id disable">
                         <input type="text"  id= "userId">
                     </div>
                 
                     <div class = "main-content__content__profile-item__change">
-                        <button type = "submit" >Изменить</button>
+                        <button type = "submit" class = "btn btn-primary" >Изменить</button>
                     </div>
-                </div>
             <?php }?>
             <fieldset>
                 <legend>Контактная информация</legend>
