@@ -4,17 +4,27 @@
     </div>
     <h2>Пользователи</h2>
     <div class="row">
-        <div class="col-md-4">Имя</div>
-        <div class="col-md-4">Отработано за день</div>
-        <div class="col-md-4">Отработано за месяц</div>
+        <div class="col-md-3">Имя</div>
+        <div class="col-md-3">Статус</div>
+        <div class="col-md-3">Отработано за день</div>
+        <div class="col-md-3">Отработано за месяц</div>
     </div>
     <?php foreach($all_users as $val): ?>
-        <div class = "row">
-            <div class="col-md-4">
+        <div class = "row d-flex align-items-center">
+            <div class="col-md-3">
             <a href = "/profile?id=<?php echo $val['id']; ?>" ><?php echo $val['user_name'];?></a>
             <!-- <option value="<?php echo $val['id']; ?>"><?php echo $val['user_name'];?></option> -->
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <?php foreach($all_time as $time): ?>
+                    <p><?php $date = str_replace(":", "", date("d:m:Y", time()));
+                    if($val['id']==$time['user_id'] && $date == $time['date']){
+                        echo $time['status'];
+                        } 
+                        ?></p>
+                <?php endforeach; ?>
+            </div>
+            <div class="col-md-3">
                 <?php foreach($all_time as $time): ?>
                     <p><?php $date = str_replace(":", "", date("d:m:Y", time()));
                     if($val['id']==$time['user_id'] && $date == $time['date']){
@@ -23,7 +33,7 @@
                         ?></p>
                 <?php endforeach; ?>            
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
             <?php $time_month = 0; ?>
                 <?php foreach($all_time as $time): ?>
                     <p><?php $date = substr(str_replace(":", "", date("d:m:Y", time())),2,8);

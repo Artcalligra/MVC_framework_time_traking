@@ -5,6 +5,9 @@ body {
 }
 
 /* регистрация и авторизация */
+.card {
+    max-width: 330px;
+}
 
 .block-center {
     width: 100%;
@@ -18,9 +21,9 @@ body {
     justify-content: center;
 }
 
-.block-form {
+/* .block-form {
     background: #fff;
-    max-width: 330px;
+
     flex-basis: auto;
     flex-grow: 1;
     margin: 0 auto;
@@ -28,8 +31,7 @@ body {
     border-radius: 15px;
     box-shadow: 0.4em 0.4em 5px rgba(122, 122, 122, 0.5);
     font: 1.2em Geometria-Medium;
-    /* box-shadow:0 0 10px rgba(0,0,0,0.5); */
-}
+} 
 
 .block-form h2 {
     text-align: center;
@@ -49,16 +51,17 @@ body {
     margin: 10px 0;
     font-size: 0.8em;
 }
-
+*/
 /* .block-form span {
     font-size: 0.8em;
 } */
 
-form{
+form {
     margin-bottom: 15px;
 }
 
-.block-form__sign, .block-form__recovery-pass {
+.block-form__sign,
+.block-form__recovery-pass {
     text-align: center;
     margin-top: 5px;
 }

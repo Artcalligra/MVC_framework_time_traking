@@ -99,4 +99,7 @@ main {
     margin: 10px 0;
     font-size: 1.1em;
 }
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #2DA8A9 !important;
+}
 

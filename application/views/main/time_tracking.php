@@ -20,16 +20,16 @@
   <select id="selectMonth"> </select>
   <div id = "calendar"></div>
   <div class = "main-content__content__tracking-hours row">
-    <div class = "col-md-6 main-content__content__tracking-worked__hours"><p>Отработано часов: <b class = "workedHours"></b></p></div>
-    <div class = "col-md-6 main-content__content__tracking-worked__norm"><p>Норма часов: <b class = "normdHours"></b></p></div>
+    <div class = "col-md-6 main-content__content__tracking-worked__hours"><p>Отработано часов(ч) : <b class = "workedHours"></b></p></div>
+    <div class = "col-md-6 main-content__content__tracking-worked__norm"><p>Норма часов(ч) : <b class = "normdHours"></b></p></div>
     <!-- <div class = "col-md-3 main-content__content__tracking-worked__percent"><p>Процент: <b class = "workedPercent"></b></p></div>
     <div class = "col-md-3 main-content__content__tracking-worked__salary"><p>ЗП: <b class = "workedSalary"></b></p></div> -->
   </div>
   <div class = "main-content__content__tracking-salary row">
     <!-- <div class = "col-md-3 main-content__content__tracking-worked__hours"><p>Отработано часов: <b class = "workedHours"></b></p></div>
     <div class = "col-md-3 main-content__content__tracking-worked__norm"><p>Норма часов: <b class = "normdHours"></b></p></div> -->
-    <div class = "col-md-6 main-content__content__tracking-worked__percent"><p>Процент: <b class = "workedPercent"></b></p></div>
-    <div class = "col-md-6 main-content__content__tracking-worked__salary"><p>ЗП: <b class = "workedSalary"></b></p></div>
+    <div class = "col-md-6 main-content__content__tracking-worked__percent"><p>Процент(%) : <b class = "workedPercent"></b></p></div>
+    <div class = "col-md-6 main-content__content__tracking-worked__salary"><p>ЗП(руб) : <b class = "workedSalary"></b></p></div>
   </div>
 
   <div class="modal fade" id="dayModal" tabindex="-1" role="dialog" aria-labelledby="dayModalLabel" aria-hidden="true">

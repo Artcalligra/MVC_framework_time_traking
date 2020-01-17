@@ -92,6 +92,10 @@
     margin-top: 0;
 }
 
+.modal-title{
+    padding-right: 10px;
+}
+
 </style>
 
 <script>

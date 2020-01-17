@@ -20,7 +20,7 @@
             <p><?php echo mb_strimwidth($val['description'], 0, 250) ?></p>
         </div>
         <div class ="main-content__content__news-item_button align-end">
-            <a href = "/news?id=<?php echo $val['id']; ?>">Read more</a>
+            <a href = "/news?id=<?php echo $val['id']; ?>">Читать далее</a>
         </div>
 
     </div>

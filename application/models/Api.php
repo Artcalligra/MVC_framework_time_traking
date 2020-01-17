@@ -20,17 +20,6 @@ class Api extends Model
         return $date;
     }
 
-   /*  public function checkUserById($user_id)
-    {
-        $db = new Db;
-        $params = [
-            'user_id' => $user_id,
-        ];
-
-        $date = $this->db->row('SELECT * FROM times WHERE user_id = :user_id', $params);
-        return $date;
-    } */
-
     public function checkUserByIdLast($user_id)
     {
         $db = new Db;
